@@ -1,4 +1,4 @@
-# DoodleTunes 🎵✨
+# DoodleTunes 🎵
 ### Turning doodles into short, AI-generated musical clips
 
 ## Overview
