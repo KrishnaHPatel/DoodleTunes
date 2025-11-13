@@ -26,7 +26,7 @@ Draw → Recognize → Generate Lyrics → Select Melody → Produce Singing Cli
 ## Usage
 1. Open the DoodleTunes web application.
 2. Draw a doodle on the provided canvas.
-3. (Optional) Select a mood from the predefined list.
+3. Select a mood from the predefined list.
 4. Click **Generate Song**.
 5. Listen to the AI-generated singing clip created from your doodle.
 
