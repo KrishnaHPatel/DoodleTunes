@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoodleTunes - Poetic Voice + Mood Melody</title>
+    <link rel="stylesheet" href="src/ui/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 DoodleTunes</h1>
+        <p class="subtitle">Poetic Voice + Mood Melody</p>
+        
+        <div class="controls-panel">
+            <div class="mood-selector">
+                <label for="mood-select">Mood:</label>
+                <select id="mood-select">
+                    <option value="Calm">Calm</option>
+                    <option value="Sad">Sad</option>
+                    <option value="Mysterious">Mysterious</option>
+                    <option value="Romantic">Romantic</option>
+                    <option value="Hopeful">Hopeful</option>
+                    <option value="Happy" selected>Happy</option>
+                    <option value="Excited">Excited</option>
+                    <option value="Angry">Angry</option>
+                </select>
+            </div>
+            
+            <div class="volume-controls">
+                <label>
+                    Voice: <input type="range" id="voice-volume" min="0" max="100" value="80">
+                    <span id="voice-volume-value">80%</span>
+                </label>
+                <label>
+                    Music: <input type="range" id="music-volume" min="0" max="100" value="60">
+                    <span id="music-volume-value">60%</span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="lyrics-panel">
+            <h2>Lyrics</h2>
+            <textarea id="lyrics-input" rows="8" placeholder="Enter lyrics (one line per verse)...">The sun shines bright
+In the morning light
+Birds sing their song
+All day long
+Happy and free
+Just like me
+Dancing in the breeze
+With so much ease</textarea>
+        </div>
+        
+        <div class="action-buttons">
+            <button id="generate-btn">Generate Lyrics</button>
+            <button id="play-btn">Play</button>
+            <button id="stop-btn" disabled>Stop</button>
+        </div>
+        
+        <div class="status" id="status">Ready</div>
+        
+        <div class="progress" id="progress" style="display: none;">
+            <div class="progress-bar" id="progress-bar"></div>
+            <div class="progress-text" id="progress-text">Line 1 of 8</div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.js"></script>
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>
+
