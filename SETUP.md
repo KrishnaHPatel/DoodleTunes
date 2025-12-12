@@ -175,23 +175,51 @@ DoodleTunes/
 ├── backend/
 │   ├── app.py              # Unified Flask server (run this!)
 │   ├── requirements.txt    # Python dependencies
+│   ├── lyric_generator.py  # LLM lyric generation module
+│   ├── evaluation.py       # Evaluation utilities
+│   ├── test_lyrics.py      # Test script for lyric generation
 │   ├── voices/             # Voice model files (download required)
 │   │   ├── Happy/
 │   │   ├── Sad/
 │   │   ├── Calm/
 │   │   ├── Angry/
 │   │   ├── Romantic/
-│   │   └── Energetic/
-│   └── src/
-│       └── tts/           # TTS implementation
+│   │   ├── Energetic/
+│   │   └── Default/        # Default fallback voice
+│   ├── src/
+│   │   └── tts/            # TTS implementation
+│   │       ├── piper.py    # Piper TTS wrapper
+│   │       └── pacing.py   # Mood-based pacing and pauses
+│   └── piper/              # Piper binary and dependencies
 ├── frontend/
-│   ├── intro.html         # Welcome page
-│   ├── drawing.html       # Page 1: Image recognition
-│   ├── index.html         # Page 2: Lyric generation
-│   ├── playback.html      # Page 3: Audio playback
-│   ├── melodies/          # melody files
-│   └── src/               # Frontend JavaScript
-└── SETUP.md               # This file
+│   ├── intro.html          # Welcome page (root /)
+│   ├── drawing.html        # Page 1: Image recognition
+│   ├── index.html          # Page 2: Lyric generation
+│   ├── playback.html       # Page 3: Audio playback
+│   ├── script.js           # Lyric generation page logic
+│   ├── package.json        # Frontend dependencies
+│   ├── melodies/           # Custom melody audio files
+│   │   ├── Happy_Melody.wav
+│   │   ├── Sad_Melody.wav
+│   │   ├── Calm_Melody.wav
+│   │   ├── Angry_Melody.wav
+│   │   ├── Romantic_Melody.wav
+│   │   └── Energetic_Melody.wav
+│   └── src/
+│       ├── api/
+│       │   └── client.js   # API client for backend calls
+│       ├── audio/
+│       │   ├── melody.js    # Mood-based melody player
+│       │   ├── mixer.js    # Audio mixing (voice + music)
+│       │   └── voicePlayer.js  # Voice playback handler
+│       ├── drawing.js       # Drawing page logic (canvas, BEiT API)
+│       ├── playback.js     # Playback page controller
+│       └── ui/
+│           └── style.css   # Shared UI styles
+├── README.md               # Project overview and quick start
+├── SETUP.md                # Detailed setup instructions (this file)
+├── package.json            # Root package.json (if present)
+└── .gitignore             # Git ignore rules
 ```
 
 ---
