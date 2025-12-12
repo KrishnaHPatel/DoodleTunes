@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from lyric_generator import LyricGenerator, LyricRequest
 import os
 
-app = Flask(__name__, static_folder="static", static_url_path="")
+app = Flask(__name__, static_folder="../frontend", static_url_path="")
 
 # Single generator instance; defaults to Qwen-only setup
 generator = LyricGenerator(provider="huggingface", model=os.getenv("LLM_MODEL", "qwen3"))
