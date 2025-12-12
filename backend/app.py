@@ -24,21 +24,32 @@ def load_beit_model():
     if _beit_model is None:
         try:
             import torch
-            from PIL import Image
-            import io
             from transformers import BeitForImageClassification, BeitImageProcessor
             
             MODEL_NAME = "kmewhort/beit-sketch-classifier"
+            print(f"Loading BEiT model: {MODEL_NAME}...")
             _beit_processor = BeitImageProcessor.from_pretrained(MODEL_NAME, use_safetensors=True)
             _beit_model = BeitForImageClassification.from_pretrained(MODEL_NAME, use_safetensors=True)
             _beit_device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             _beit_model.to(_beit_device)
             _beit_model.eval()
-            print("✓ BEiT model loaded successfully")
-        except ImportError:
+            print(f"✓ BEiT model loaded successfully on {_beit_device}")
+        except ImportError as e:
             print("⚠ Warning: torch/transformers not installed. BEiT endpoint will not work.")
             print("  Install with: pip install torch transformers pillow")
+            print(f"  Import error: {e}")
+            _beit_model = False  # Mark as failed to load
             raise
+        except Exception as e:
+            print(f"⚠ Warning: Failed to load BEiT model: {e}")
+            import traceback
+            traceback.print_exc()
+            _beit_model = False  # Mark as failed to load
+            raise
+    
+    if _beit_model is False:
+        raise Exception("BEiT model failed to load previously")
+        
     return _beit_model, _beit_processor, _beit_device
 
 app = Flask(__name__, static_folder="../frontend", static_url_path="")
@@ -184,7 +195,12 @@ def health():
 
 @app.route("/")
 def index():
-    # Default to drawing page (page 1)
+    # Intro/welcome page
+    return send_from_directory(app.static_folder, "intro.html")
+
+@app.route("/drawing.html")
+def drawing():
+    # Drawing page (page 1)
     return send_from_directory(app.static_folder, "drawing.html")
 
 @app.route("/lyrics.html")
@@ -195,10 +211,6 @@ def lyrics():
 def playback():
     return send_from_directory(app.static_folder, "playback.html")
 
-@app.route("/drawing.html")
-def drawing():
-    return send_from_directory(app.static_folder, "drawing.html")
-
 @app.route("/api/predict", methods=["POST", "OPTIONS"])
 def predict():
     """BEiT sketch classification endpoint"""
@@ -207,7 +219,12 @@ def predict():
     
     try:
         model, processor, device = load_beit_model()
+        if model is None or processor is None:
+            return jsonify({"error": "Model not loaded"}), 503
     except Exception as e:
+        print(f"Error loading BEiT model: {e}")
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": f"Model not available: {str(e)}"}), 503
     
     try:
@@ -216,6 +233,9 @@ def predict():
         import torch
         
         data = request.get_json()
+        if not data:
+            return jsonify({"error": "No JSON data provided"}), 400
+            
         img_data = data.get("image")
 
         if not img_data:
@@ -230,6 +250,9 @@ def predict():
             image_bytes = io.BytesIO(base64.b64decode(img_data))
             image = Image.open(image_bytes).convert("RGB")
         except Exception as e:
+            print(f"Error parsing image: {e}")
+            import traceback
+            traceback.print_exc()
             return jsonify({"error": f"Failed to parse image: {str(e)}"}), 400
 
         # Preprocess and run BEiT
@@ -242,10 +265,16 @@ def predict():
                 pred_idx = logits.argmax(-1).item()
                 label = model.config.id2label[pred_idx]
         except Exception as e:
+            print(f"Error during model inference: {e}")
+            import traceback
+            traceback.print_exc()
             return jsonify({"error": f"Model inference failed: {str(e)}"}), 500
 
         return jsonify({"label": label})
     except Exception as e:
+        print(f"Unexpected error in predict endpoint: {e}")
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
 
