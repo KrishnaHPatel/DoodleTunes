@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DoodleTunes Lyrics</title>
+    <!-- Optional external stylesheet from the other branch -->
+    <link rel="stylesheet" href="src/ui/style.css">
     <style>
       :root {
         --bg: #f6f9ff;
@@ -52,10 +54,7 @@
       }
       .row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
       label { font-size: 13px; color: #374151; display: inline-block; margin-bottom: 6px; }
-      input, select, button {
-        padding: 10px 12px;
-        font-size: 14px;
-      }
+      input, select, button { padding: 10px 12px; font-size: 14px; }
       input, select {
         border: 1px solid var(--border);
         border-radius: 10px;
@@ -63,14 +62,12 @@
         width: 100%;
       }
       /* Uniform custom select styling */
-      .select {
-        position: relative;
-      }
+      .select { position: relative; }
       .select select {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-        padding-right: 36px; /* room for chevron */
+        padding-right: 36px;
         background-color: #fff;
       }
       .select:after {
@@ -106,9 +103,7 @@
         border: 1px solid var(--border);
         box-shadow: none;
       }
-      .btn-outline:hover {
-        background: #f9fafb;
-      }
+      .btn-outline:hover { background: #f9fafb; }
       .card {
         border: 1px solid var(--border);
         border-radius: var(--radius);
@@ -168,6 +163,7 @@
       </div>
       <div class="subtitle">Enter labels, choose a mood, and generate singable, short lyrics.</div>
 
+      <!-- Lyric Generator Panel -->
       <div class="card grid">
         <div class="row">
           <div style="flex:2; min-width: 260px;">
@@ -181,7 +177,7 @@
                 <option value="happy">happy</option>
                 <option value="sad">sad</option>
                 <option value="calm">calm</option>
-                <option value="angry">angry</option>
+                <option value="mysterious">mysterious</option>
                 <option value="energetic">energetic</option>
                 <option value="romantic">romantic</option>
               </select>
@@ -206,9 +202,57 @@
           </div>
         </div>
       </div>
+
+      <!-- Playback Panel (from other branch) -->
+      <div class="card grid" style="margin-top:14px;">
+        <div class="row">
+          <div style="flex:1; min-width: 200px;">
+            <label for="mood-select">Playback Mood</label><br>
+            <div class="select">
+              <select id="mood-select">
+                <option value="Calm">Calm</option>
+                <option value="Sad">Sad</option>
+                <option value="Romantic">Romantic</option>
+                <option value="Happy" selected>Happy</option>
+                <option value="Energetic">Energetic</option>
+                <option value="Angry">Angry</option>
+              </select>
+            </div>
+          </div>
+          <div style="flex:2; min-width: 260px;">
+            <label>Volume</label><br>
+            <div class="row" style="gap:18px;">
+              <label style="flex:1;">
+                Voice:
+                <input type="range" id="voice-volume" min="0" max="100" value="80" style="width:100%">
+                <span id="voice-volume-value">80%</span>
+              </label>
+              <label style="flex:1;">
+                Music:
+                <input type="range" id="music-volume" min="0" max="100" value="60" style="width:100%">
+                <span id="music-volume-value">60%</span>
+              </label>
+            </div>
+          </div>
+          <div style="align-self: end;">
+            <button id="play-btn" class="btn-outline">Play</button>
+            <button id="stop-btn" class="btn-outline" disabled>Stop</button>
+          </div>
+        </div>
+        <div class="grid">
+          <div>
+            <label for="lyrics-input">Lyrics (used by playback)</label>
+            <textarea id="lyrics-input" rows="8" style="width:100%; border:1px solid var(--border); border-radius:10px; padding:12px; font-size:14px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;" readonly></textarea>
+          </div>
+          <div class="status" id="status">Ready</div>
+        </div>
+      </div>
     </div>
+    <!-- Lyric generation UI logic -->
     <script src="script.js"></script>
+    <!-- Audio synthesis and playback logic -->
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.js"></script>
+    <script type="module" src="src/main.js"></script>
   </body>
   </html>
-
 

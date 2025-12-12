@@ -1,0 +1,478 @@
+[
+  {
+    "timestamp": "2025-11-16T16:27:47.332257",
+    "labels": [
+      "cat",
+      "moon"
+    ],
+    "emotion": "mysterious",
+    "lyrics": "In the night, my feline friend, moon's soft light shines,\nPaws pause, watching stars twinkle in mysterious align.\nUnder the sky's vast canvas, where secrets lie,\nA cat's green eyes gleam, reflecting the moon's gentle sigh.\nMoonbeams dance, touching paws, in an enchanting ballet,\nSilence holds the rustling leaves in awe, as cats come to play.\nIn the stillness, the cat purrs, a whispered lullaby,\nMoon's tranquil grace, a mystic promise, under the starlit sky.",
+    "source": "llm",
+    "model": null,
+    "label_relevance": 3,
+    "emotion_match": 4,
+    "overall_quality": 3,
+    "singability": 3,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-11-16T16:28:33.023673",
+    "labels": [
+      "sun",
+      "flower"
+    ],
+    "emotion": "happy",
+    "lyrics": "Sunbeams dance on petals bright,\nFlower blooms in morning's light.\nSweet fragrance fills the air so sweet,\nNurtured by the sun, so fleet.\nHer radiant smile in every ray,\nBasking in the sun's warm sway.\nLife's simple joys in vibrant hue,\nSun and flower, ever renewed.",
+    "source": "llm",
+    "model": null,
+    "label_relevance": 5,
+    "emotion_match": 5,
+    "overall_quality": 3,
+    "singability": 4,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-11-16T16:29:47.920595",
+    "labels": [
+      "rain",
+      "umbrella"
+    ],
+    "emotion": "sad",
+    "lyrics": "Raindrops dance on my umbrella's brim,\nMelancholy hues in the dulled light.\nBeneath my shield, I hide from the whim,\nNature's sorrow echoes in the night.\nMy footsteps mute in the sodden hush,\nAn orchestra's silent symphony.\nThe world's tears join with mine in a rush,\nAs I walk, lost, beneath the drizzling sky.",
+    "source": "llm",
+    "model": null,
+    "label_relevance": 5,
+    "emotion_match": 5,
+    "overall_quality": 4,
+    "singability": 4,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-11-16T16:29:49.379218",
+    "labels": [
+      "bird",
+      "tree"
+    ],
+    "emotion": "calm",
+    "lyrics": "Whispering winds sing to feathered friends,\nNestled high in branches where they mend,\nTrees dance softly, shadows they lend,\nBirdsong lullabies without an end,\nRoots embrace earth in tranquil stead,\nLeaves sway gently, in the sunlit bed,\nWings unfurling in the morning spread,\nWelcome the day with the songs they've bred.\nNature's peace in the avian serenade,\nEmbracing whispers from the sylvan shade.",
+    "source": "llm",
+    "model": null,
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-11-16T17:01:18.181615",
+    "labels": [
+      "cat",
+      "moon"
+    ],
+    "emotion": "mysterious",
+    "lyrics": "The cat and moon hides in shadows deep,\nSecrets that it wants to keep.\nThrough the darkness it will creep,\nThe cat never seems to sleep.\nWhispers echo in the night,\nHidden from the light.\nThe cat moves beyond our sight,\nA mystery burning bright.",
+    "source": "template",
+    "model": null,
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-11-16T17:05:30.623030",
+    "labels": [
+      "sun",
+      "flower"
+    ],
+    "emotion": "happy",
+    "lyrics": "Sunlight kissed, petals burst, Radiant bloom, joyous burst.\nGolden rays, dance with grace, Flower's smile, in radiant space.\nBasking beneath, in cheerful grace, Sun's warm smile, on blossoming face.\nPetals sway, in gentle breeze, Sunlit morn, within their ease.\nFlourishing bond, sun's gentle beams, Blossoming dreams, life's sunny themes.\nNature's wondrous, sunlit scene, Sun and flower, serene, serene.\nBasking in beauty, life's sweet scenes, Sun and flora, in joyous queens.\nHappily grown, in nature's realm, Sun and blooms, in sunlit helm.",
+    "source": "llm",
+    "model": null,
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-11-16T17:05:32.329048",
+    "labels": [
+      "rain",
+      "umbrella"
+    ],
+    "emotion": "sad",
+    "lyrics": "Raindrops dance upon my glass, tears mirror sadness's mask,\nUmbrella's shade in hollow hand, promises broken by the sand.\nHeavy heart beats in rhythmic sync, with sorrow's gentle link,\nSplashed by life's relentless storm, beneath the shattered norm.\nDrenched in memories, I stand alone, raindrops whispering my tone,\nThrough the downpour, bitter tears fall, beneath the weeping boughs, all.\nIn this sea of melancholic rain, umbrella's hollow frame,\nA bittersweet symphony of pain, beneath the grey and tamed.",
+    "source": "llm",
+    "model": null,
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-11-16T17:05:32.840271",
+    "labels": [
+      "bird",
+      "tree"
+    ],
+    "emotion": "calm",
+    "lyrics": "Bird on a branch, whispers the wind,\nTree's leaves quiver, tranquility finds,\nSky painted with hues, sun begins to wind,\nBird sings melody, hymn of the minding,\nNest cradled, safety assured,\nPeaceful moment, nature's pure,\nBird in its glory, tree in its power,\nCalm serenade, day's new hour.",
+    "source": "llm",
+    "model": null,
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T19:36:26.947370",
+    "labels": [
+      "cat",
+      "moon"
+    ],
+    "emotion": "mysterious",
+    "lyrics": "In the night, my feline friend, shadows at your feet,\nMoonlight dances on your coat, a soft, enchanting beat.\nGentle purrs resonate, beneath the calming tree,\nSilent whispers of the night, in harmony with me.\nMoon's glow filters through your eyes, a mystic allure,\nThe cosmic dance above, our secret world ensured.\nCuriosity and wonder intertwined, as dreams take flight,\nBeneath the moonlit sky, with our cat as our light.",
+    "source": "llm",
+    "model": "mistralai/Mistral-7B-Instruct-v0.2:featherless-ai",
+    "label_relevance": 4,
+    "emotion_match": 4,
+    "overall_quality": 2,
+    "singability": 2,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T19:36:48.196391",
+    "labels": [
+      "sun",
+      "flower"
+    ],
+    "emotion": "happy",
+    "lyrics": "Golden sun above, warms my day,\nNurturing flower in the light of play,\nPetals dancing, swaying in the breeze,\nSunbeams kissing petals with gentle ease,\nSweet fragrance fills the air so bright,\nA sunflower bloom, a beautiful sight,\nTogether singing, in this radiant scene,\nSun and flower, perfect harmony.",
+    "source": "llm",
+    "model": "mistralai/Mistral-7B-Instruct-v0.2:featherless-ai",
+    "label_relevance": 4,
+    "emotion_match": 4,
+    "overall_quality": 2,
+    "singability": 3,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T19:37:18.453507",
+    "labels": [
+      "rain",
+      "umbrella"
+    ],
+    "emotion": "sad",
+    "lyrics": "In the pouring rain, I'm all alone, umbrella in hand\nSad melody echoes off the pavement, shadows dance\nRaindrops fall, reflecting shattered dreams, a heart in pain\nUmbrella opens, shielding me from the storm's embrace\nThrough the downpour, I wander, lost in thought and feeling\nSilent whispers carried away by the relentless rain\nLife's bitter tears mix with mine, an unspoken truth revealed\nUnderneath the canopy of my umbrella, I mend, I heal.",
+    "source": "llm",
+    "model": "mistralai/Mistral-7B-Instruct-v0.2:featherless-ai",
+    "label_relevance": 4,
+    "emotion_match": 4,
+    "overall_quality": 3,
+    "singability": 3,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T19:38:16.062161",
+    "labels": [
+      "bird",
+      "tree"
+    ],
+    "emotion": "calm",
+    "lyrics": "Bird in the tree sings a sweet melody,\nNature's symphony calms my weary soul.\nTree's leaves rustle, whispering gentle stories,\nBird's wings dancing, painting the sky with tales.\nBird takes flight, ascending to new heights,\nTree stands tall, grounded, steadfast and bright.\nIn their harmony, life's chaos fades away,\nBreathing in peace, beneath the swaying tree's bay.",
+    "source": "llm",
+    "model": "mistralai/Mistral-7B-Instruct-v0.2:featherless-ai",
+    "label_relevance": 4,
+    "emotion_match": 4,
+    "overall_quality": 2,
+    "singability": 2,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T19:38:17.848580",
+    "labels": [
+      "cat",
+      "moon"
+    ],
+    "emotion": "mysterious",
+    "lyrics": "The cat and moon hides in shadows deep,\nSecrets that it wants to keep.\nThrough the darkness it will creep,\nThe cat never seems to sleep.\nWhispers echo in the night,\nHidden from the light.\nThe cat moves beyond our sight,\nA mystery burning bright.",
+    "source": "template",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T19:38:19.714035",
+    "labels": [
+      "sun",
+      "flower"
+    ],
+    "emotion": "happy",
+    "lyrics": "I see sun and flower in the bright blue sky,\nDancing freely, flying high.\nJoyful moments pass us by,\nWith sun we can touch the sky.\nLaughter fills the air so sweet,\nEvery moment is a treat.\nTogether we are complete,\nWith sun our hearts will beat.",
+    "source": "template",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T19:38:20.764470",
+    "labels": [
+      "rain",
+      "umbrella"
+    ],
+    "emotion": "sad",
+    "lyrics": "The rain and umbrella stands alone and still,\nAs shadows fall upon the hill.\nMemories that time can't kill,\nThe rain waits with patient will.\nTears fall like gentle rain,\nEasing moments of the pain.\nThrough the darkness we remain,\nThe rain helps us to sustain.",
+    "source": "template",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T19:38:21.330130",
+    "labels": [
+      "bird",
+      "tree"
+    ],
+    "emotion": "calm",
+    "lyrics": "The bird and tree rests in peaceful grace,\nMoving slowly through time and space.\nA gentle smile upon its face,\nThe bird finds its quiet place.\nSoftly flowing like a stream,\nFulfilling every dream.\nThe bird helps us to redeem,\nA calm and tranquil theme.",
+    "source": "template",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T21:52:34.768464",
+    "labels": [
+      "cat",
+      "moon"
+    ],
+    "emotion": "mysterious",
+    "lyrics": "<think>\nOkay, the user wants me to write a verse for a pop song about a cat and the moon, based on 2010s-2020s artists. Let me start by recalling some of those artists' styles. Ariana Grande and Taylor Swift often use vivid imagery and emotional lyrics. Justin Bieber's songs sometimes have a more straightforward approach.\nThe requirements are: 8 lines, simple vocabulary, no end rhymes, reference cat and moon naturally, and a mysterious mood. Let me think of how to incorporate those elements.\nFirst, the cat. Maybe describe its movement or something about it. The moon could be a symbol of mystery or something that's always there. Maybe the cat is watching the moon at night.\nAvoid end rhymes, so each line should have a different ending. Use simple words. Let me try:\n\"Cat slinks through the shadows, soft paws on the floor,\"\n\"Moonlight whispers secrets, a silver thread in the void.\"\n\"Silent eyes follow the stars, a silent dance of the night",
+    "source": "llm",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T21:52:35.211091",
+    "labels": [
+      "sun",
+      "flower"
+    ],
+    "emotion": "happy",
+    "lyrics": "<think>\nOkay, the user wants me to write a verse for a pop song about the sun and a flower, based on 2010s and 2020s pop artists. Let me start by recalling popular songs from that era. Ariana Grande has \"The Way We Were,\" Taylor Swift has \"Shake It Off,\" Justin Bieber does \"Love Yourself.\"\nThe requirements are: 8 lines, simple vocabulary, no end rhymes, natural references to sun and flower, happy mood.\nFirst, I need to make sure the lines flow well and are easy to sing. Maybe start with the sun shining, then connect it to the flower. Use simple verbs like shine, bloom, grow. Avoid complex structures.\nLine 1: Maybe \"Sunlight spills on the ground, a golden glow,\" that's straightforward.\nLine 2: \"Flower in the garden, it's so bright and bold.\"\nLine 3: \"We chase the light, we dance in the light,\" linking the sun and the flower.\nLine 4",
+    "source": "llm",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T21:53:06.771216",
+    "labels": [
+      "rain",
+      "umbrella"
+    ],
+    "emotion": "sad",
+    "lyrics": "The rain and umbrella stands alone and still,\nAs shadows fall upon the hill.\nMemories that time can't kill,\nThe rain waits with patient will.\nTears fall like gentle rain,\nEasing moments of the pain.\nThrough the darkness we remain,\nThe rain helps us to sustain.",
+    "source": "template",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T21:53:08.745693",
+    "labels": [
+      "bird",
+      "tree"
+    ],
+    "emotion": "calm",
+    "lyrics": "The bird and tree rests in peaceful grace,\nMoving slowly through time and space.\nA gentle smile upon its face,\nThe bird finds its quiet place.\nSoftly flowing like a stream,\nFulfilling every dream.\nThe bird helps us to redeem,\nA calm and tranquil theme.",
+    "source": "template",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T23:54:39.439109",
+    "labels": [
+      "cat",
+      "moon"
+    ],
+    "emotion": "mysterious",
+    "lyrics": "<think>\nOkay, the user wants me to write a verse for a pop song based on cat and moon, with specific requirements. Let me start by understanding the requirements.\nFirst, the song needs to be easy to sing, simple vocabulary, no end rhymes. The example songs show that they use simple structures with repeating lines and a mysterious mood. So I need to keep the lines short and avoid complex words.\nThe objects are cat and moon. I should naturally include them. The mood is mysterious, so maybe something about the cat's movements or the moon's light.\nLooking at the example songs, they use metaphors and imagery. For instance, \"I'm gonna swing from the chandelier\" uses a metaphor. So maybe use similar metaphors here.\nLet me think of lines that mention the cat and moon. Maybe the cat is chasing the moon? Or the moon reflecting on the cat?\nAvoid end rhymes, so each line should have a different ending. Let me try a first line: \"The cat strolls through the night, its shadow plays on the floor",
+    "source": "llm",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T23:54:41.312039",
+    "labels": [
+      "sun",
+      "flower"
+    ],
+    "emotion": "happy",
+    "lyrics": "I see sun and flower in the bright blue sky,\nDancing freely, flying high.\nJoyful moments pass us by,\nWith sun we can touch the sky.\nLaughter fills the air so sweet,\nEvery moment is a treat.\nTogether we are complete,\nWith sun our hearts will beat.",
+    "source": "template",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T23:54:42.461813",
+    "labels": [
+      "rain",
+      "umbrella"
+    ],
+    "emotion": "sad",
+    "lyrics": "The rain and umbrella stands alone and still,\nAs shadows fall upon the hill.\nMemories that time can't kill,\nThe rain waits with patient will.\nTears fall like gentle rain,\nEasing moments of the pain.\nThrough the darkness we remain,\nThe rain helps us to sustain.",
+    "source": "template",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-10T23:54:50.814373",
+    "labels": [
+      "bird",
+      "tree"
+    ],
+    "emotion": "calm",
+    "lyrics": "<think>\nOkay, the user wants me to write a verse for a pop group's song based on birds and trees, with specific requirements. Let me start by understanding the constraints.\nFirst, the song needs to be easy to sing, so simple vocabulary and grammar are essential. Avoid end rhymes, so I need to focus on internal rhymes or assonance. The mood should be calm, so the language should be soothing and not too intense.\nThe example songs show that the lyrics often have a narrative or emotional arc, but in this case, since it's a verse, maybe a more straightforward approach would work. The bird and tree are key objects, so I need to naturally incorporate them without forcing them into the middle of a complex sentence.\nLooking at the examples, they often use repetition and simple structure. For instance, \"I'm gonna swing\" has a repetitive structure with a chorus-like feel. Maybe I can create a similar pattern here.\nLet me think of a scenario where a bird and a tree interact. Maybe the bird is perched on a tree, or the tree is",
+    "source": "llm",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-11T00:24:23.576480",
+    "labels": [
+      "cat",
+      "moon"
+    ],
+    "emotion": "mysterious",
+    "lyrics": "I'm chasing the moon through the night\nWith a cat that's got a curious light\nIt flickers in the shadows it stays\nA mystery that's hard to grasp\nThe stars are distant, the sky is wide\nBut the moon is guiding me through\nA path I don't know, I just feel\nIt's calling me, and I'm drawn to you",
+    "source": "llm",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": 5,
+    "emotion_match": 4,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-11T00:47:20.421543",
+    "labels": [
+      "sun",
+      "flower"
+    ],
+    "emotion": "happy",
+    "lyrics": "Sunlight spills on the ground, it's so bright\nA flower blooms in the garden, it's so tight\nWe chase the day, we laugh and we play\nThe world feels small, but we're so happy\nSunlight paints the sky, it's so warm\nA flower stands in the field, it's so strong\nWe dance in the breeze, we feel the beat\nThe heart is light, and the mood is sweet",
+    "source": "llm",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": 5,
+    "emotion_match": 5,
+    "overall_quality": 3,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-11T00:48:02.917557",
+    "labels": [
+      "rain",
+      "umbrella"
+    ],
+    "emotion": "sad",
+    "lyrics": "Rain taps on the windows, it's a constant sound\nUmbrella stays in the hand, it's the only thing I have\nI'm stuck in the rain, I can't find a way to go\nIt's pouring, and I'm drowning in the tears I've got\nThe world feels so far, but I'm here with you\nWe're chasing the light, but it's always just out of reach\nI need to feel the rain, to let it wash away\nBut I can't move, I'm caught in the storm and the haze",
+    "source": "llm",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  },
+  {
+    "timestamp": "2025-12-11T00:48:11.106054",
+    "labels": [
+      "bird",
+      "tree"
+    ],
+    "emotion": "calm",
+    "lyrics": "So the wind blows through the leaves\nA song in the trees, it's a breeze\nThe bird flies high in the sky\nIt's a quiet place, it's a sigh\nThe tree stands tall in the distance\nIts roots deep, it's a strength\nThe bird watches the world go by\nAnd the tree holds the time and the sky",
+    "source": "llm",
+    "model": "Qwen/Qwen3-1.7B:featherless-ai",
+    "label_relevance": null,
+    "emotion_match": null,
+    "overall_quality": null,
+    "singability": null,
+    "comments": null,
+    "user_id": null
+  }
+]

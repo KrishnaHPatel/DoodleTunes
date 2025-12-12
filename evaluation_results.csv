@@ -1,0 +1,224 @@
+timestamp,user_id,labels,emotion,source,model,label_relevance,emotion_match,overall_quality,singability,comments,lyrics
+2025-11-16T16:27:47.332257,,"cat, moon",mysterious,llm,,3,4,3,3,,"In the night, my feline friend, moon's soft light shines,
+Paws pause, watching stars twinkle in mysterious align.
+Under the sky's vast canvas, where secrets lie,
+A cat's green eyes gleam, reflecting the moon's gentle sigh.
+Moonbeams dance, touching paws, in an enchanting ballet,
+Silence holds the rustling leaves in awe, as cats come to play.
+In the stillness, the cat purrs, a whispered lullaby,
+Moon's tranquil grace, a mystic promise, under the starlit sky."
+2025-11-16T16:28:33.023673,,"sun, flower",happy,llm,,5,5,3,4,,"Sunbeams dance on petals bright,
+Flower blooms in morning's light.
+Sweet fragrance fills the air so sweet,
+Nurtured by the sun, so fleet.
+Her radiant smile in every ray,
+Basking in the sun's warm sway.
+Life's simple joys in vibrant hue,
+Sun and flower, ever renewed."
+2025-11-16T16:29:47.920595,,"rain, umbrella",sad,llm,,5,5,4,4,,"Raindrops dance on my umbrella's brim,
+Melancholy hues in the dulled light.
+Beneath my shield, I hide from the whim,
+Nature's sorrow echoes in the night.
+My footsteps mute in the sodden hush,
+An orchestra's silent symphony.
+The world's tears join with mine in a rush,
+As I walk, lost, beneath the drizzling sky."
+2025-11-16T16:29:49.379218,,"bird, tree",calm,llm,,,,,,,"Whispering winds sing to feathered friends,
+Nestled high in branches where they mend,
+Trees dance softly, shadows they lend,
+Birdsong lullabies without an end,
+Roots embrace earth in tranquil stead,
+Leaves sway gently, in the sunlit bed,
+Wings unfurling in the morning spread,
+Welcome the day with the songs they've bred.
+Nature's peace in the avian serenade,
+Embracing whispers from the sylvan shade."
+2025-11-16T17:01:18.181615,,"cat, moon",mysterious,template,,,,,,,"The cat and moon hides in shadows deep,
+Secrets that it wants to keep.
+Through the darkness it will creep,
+The cat never seems to sleep.
+Whispers echo in the night,
+Hidden from the light.
+The cat moves beyond our sight,
+A mystery burning bright."
+2025-11-16T17:05:30.623030,,"sun, flower",happy,llm,,,,,,,"Sunlight kissed, petals burst, Radiant bloom, joyous burst.
+Golden rays, dance with grace, Flower's smile, in radiant space.
+Basking beneath, in cheerful grace, Sun's warm smile, on blossoming face.
+Petals sway, in gentle breeze, Sunlit morn, within their ease.
+Flourishing bond, sun's gentle beams, Blossoming dreams, life's sunny themes.
+Nature's wondrous, sunlit scene, Sun and flower, serene, serene.
+Basking in beauty, life's sweet scenes, Sun and flora, in joyous queens.
+Happily grown, in nature's realm, Sun and blooms, in sunlit helm."
+2025-11-16T17:05:32.329048,,"rain, umbrella",sad,llm,,,,,,,"Raindrops dance upon my glass, tears mirror sadness's mask,
+Umbrella's shade in hollow hand, promises broken by the sand.
+Heavy heart beats in rhythmic sync, with sorrow's gentle link,
+Splashed by life's relentless storm, beneath the shattered norm.
+Drenched in memories, I stand alone, raindrops whispering my tone,
+Through the downpour, bitter tears fall, beneath the weeping boughs, all.
+In this sea of melancholic rain, umbrella's hollow frame,
+A bittersweet symphony of pain, beneath the grey and tamed."
+2025-11-16T17:05:32.840271,,"bird, tree",calm,llm,,,,,,,"Bird on a branch, whispers the wind,
+Tree's leaves quiver, tranquility finds,
+Sky painted with hues, sun begins to wind,
+Bird sings melody, hymn of the minding,
+Nest cradled, safety assured,
+Peaceful moment, nature's pure,
+Bird in its glory, tree in its power,
+Calm serenade, day's new hour."
+2025-12-10T19:36:26.947370,,"cat, moon",mysterious,llm,mistralai/Mistral-7B-Instruct-v0.2:featherless-ai,4,4,2,2,,"In the night, my feline friend, shadows at your feet,
+Moonlight dances on your coat, a soft, enchanting beat.
+Gentle purrs resonate, beneath the calming tree,
+Silent whispers of the night, in harmony with me.
+Moon's glow filters through your eyes, a mystic allure,
+The cosmic dance above, our secret world ensured.
+Curiosity and wonder intertwined, as dreams take flight,
+Beneath the moonlit sky, with our cat as our light."
+2025-12-10T19:36:48.196391,,"sun, flower",happy,llm,mistralai/Mistral-7B-Instruct-v0.2:featherless-ai,4,4,2,3,,"Golden sun above, warms my day,
+Nurturing flower in the light of play,
+Petals dancing, swaying in the breeze,
+Sunbeams kissing petals with gentle ease,
+Sweet fragrance fills the air so bright,
+A sunflower bloom, a beautiful sight,
+Together singing, in this radiant scene,
+Sun and flower, perfect harmony."
+2025-12-10T19:37:18.453507,,"rain, umbrella",sad,llm,mistralai/Mistral-7B-Instruct-v0.2:featherless-ai,4,4,3,3,,"In the pouring rain, I'm all alone, umbrella in hand
+Sad melody echoes off the pavement, shadows dance
+Raindrops fall, reflecting shattered dreams, a heart in pain
+Umbrella opens, shielding me from the storm's embrace
+Through the downpour, I wander, lost in thought and feeling
+Silent whispers carried away by the relentless rain
+Life's bitter tears mix with mine, an unspoken truth revealed
+Underneath the canopy of my umbrella, I mend, I heal."
+2025-12-10T19:38:16.062161,,"bird, tree",calm,llm,mistralai/Mistral-7B-Instruct-v0.2:featherless-ai,4,4,2,2,,"Bird in the tree sings a sweet melody,
+Nature's symphony calms my weary soul.
+Tree's leaves rustle, whispering gentle stories,
+Bird's wings dancing, painting the sky with tales.
+Bird takes flight, ascending to new heights,
+Tree stands tall, grounded, steadfast and bright.
+In their harmony, life's chaos fades away,
+Breathing in peace, beneath the swaying tree's bay."
+2025-12-10T19:38:17.848580,,"cat, moon",mysterious,template,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"The cat and moon hides in shadows deep,
+Secrets that it wants to keep.
+Through the darkness it will creep,
+The cat never seems to sleep.
+Whispers echo in the night,
+Hidden from the light.
+The cat moves beyond our sight,
+A mystery burning bright."
+2025-12-10T19:38:19.714035,,"sun, flower",happy,template,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"I see sun and flower in the bright blue sky,
+Dancing freely, flying high.
+Joyful moments pass us by,
+With sun we can touch the sky.
+Laughter fills the air so sweet,
+Every moment is a treat.
+Together we are complete,
+With sun our hearts will beat."
+2025-12-10T19:38:20.764470,,"rain, umbrella",sad,template,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"The rain and umbrella stands alone and still,
+As shadows fall upon the hill.
+Memories that time can't kill,
+The rain waits with patient will.
+Tears fall like gentle rain,
+Easing moments of the pain.
+Through the darkness we remain,
+The rain helps us to sustain."
+2025-12-10T19:38:21.330130,,"bird, tree",calm,template,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"The bird and tree rests in peaceful grace,
+Moving slowly through time and space.
+A gentle smile upon its face,
+The bird finds its quiet place.
+Softly flowing like a stream,
+Fulfilling every dream.
+The bird helps us to redeem,
+A calm and tranquil theme."
+2025-12-10T21:52:34.768464,,"cat, moon",mysterious,llm,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"<think>
+Okay, the user wants me to write a verse for a pop song about a cat and the moon, based on 2010s-2020s artists. Let me start by recalling some of those artists' styles. Ariana Grande and Taylor Swift often use vivid imagery and emotional lyrics. Justin Bieber's songs sometimes have a more straightforward approach.
+The requirements are: 8 lines, simple vocabulary, no end rhymes, reference cat and moon naturally, and a mysterious mood. Let me think of how to incorporate those elements.
+First, the cat. Maybe describe its movement or something about it. The moon could be a symbol of mystery or something that's always there. Maybe the cat is watching the moon at night.
+Avoid end rhymes, so each line should have a different ending. Use simple words. Let me try:
+""Cat slinks through the shadows, soft paws on the floor,""
+""Moonlight whispers secrets, a silver thread in the void.""
+""Silent eyes follow the stars, a silent dance of the night"
+2025-12-10T21:52:35.211091,,"sun, flower",happy,llm,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"<think>
+Okay, the user wants me to write a verse for a pop song about the sun and a flower, based on 2010s and 2020s pop artists. Let me start by recalling popular songs from that era. Ariana Grande has ""The Way We Were,"" Taylor Swift has ""Shake It Off,"" Justin Bieber does ""Love Yourself.""
+The requirements are: 8 lines, simple vocabulary, no end rhymes, natural references to sun and flower, happy mood.
+First, I need to make sure the lines flow well and are easy to sing. Maybe start with the sun shining, then connect it to the flower. Use simple verbs like shine, bloom, grow. Avoid complex structures.
+Line 1: Maybe ""Sunlight spills on the ground, a golden glow,"" that's straightforward.
+Line 2: ""Flower in the garden, it's so bright and bold.""
+Line 3: ""We chase the light, we dance in the light,"" linking the sun and the flower.
+Line 4"
+2025-12-10T21:53:06.771216,,"rain, umbrella",sad,template,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"The rain and umbrella stands alone and still,
+As shadows fall upon the hill.
+Memories that time can't kill,
+The rain waits with patient will.
+Tears fall like gentle rain,
+Easing moments of the pain.
+Through the darkness we remain,
+The rain helps us to sustain."
+2025-12-10T21:53:08.745693,,"bird, tree",calm,template,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"The bird and tree rests in peaceful grace,
+Moving slowly through time and space.
+A gentle smile upon its face,
+The bird finds its quiet place.
+Softly flowing like a stream,
+Fulfilling every dream.
+The bird helps us to redeem,
+A calm and tranquil theme."
+2025-12-10T23:54:39.439109,,"cat, moon",mysterious,llm,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"<think>
+Okay, the user wants me to write a verse for a pop song based on cat and moon, with specific requirements. Let me start by understanding the requirements.
+First, the song needs to be easy to sing, simple vocabulary, no end rhymes. The example songs show that they use simple structures with repeating lines and a mysterious mood. So I need to keep the lines short and avoid complex words.
+The objects are cat and moon. I should naturally include them. The mood is mysterious, so maybe something about the cat's movements or the moon's light.
+Looking at the example songs, they use metaphors and imagery. For instance, ""I'm gonna swing from the chandelier"" uses a metaphor. So maybe use similar metaphors here.
+Let me think of lines that mention the cat and moon. Maybe the cat is chasing the moon? Or the moon reflecting on the cat?
+Avoid end rhymes, so each line should have a different ending. Let me try a first line: ""The cat strolls through the night, its shadow plays on the floor"
+2025-12-10T23:54:41.312039,,"sun, flower",happy,template,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"I see sun and flower in the bright blue sky,
+Dancing freely, flying high.
+Joyful moments pass us by,
+With sun we can touch the sky.
+Laughter fills the air so sweet,
+Every moment is a treat.
+Together we are complete,
+With sun our hearts will beat."
+2025-12-10T23:54:42.461813,,"rain, umbrella",sad,template,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"The rain and umbrella stands alone and still,
+As shadows fall upon the hill.
+Memories that time can't kill,
+The rain waits with patient will.
+Tears fall like gentle rain,
+Easing moments of the pain.
+Through the darkness we remain,
+The rain helps us to sustain."
+2025-12-10T23:54:50.814373,,"bird, tree",calm,llm,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"<think>
+Okay, the user wants me to write a verse for a pop group's song based on birds and trees, with specific requirements. Let me start by understanding the constraints.
+First, the song needs to be easy to sing, so simple vocabulary and grammar are essential. Avoid end rhymes, so I need to focus on internal rhymes or assonance. The mood should be calm, so the language should be soothing and not too intense.
+The example songs show that the lyrics often have a narrative or emotional arc, but in this case, since it's a verse, maybe a more straightforward approach would work. The bird and tree are key objects, so I need to naturally incorporate them without forcing them into the middle of a complex sentence.
+Looking at the examples, they often use repetition and simple structure. For instance, ""I'm gonna swing"" has a repetitive structure with a chorus-like feel. Maybe I can create a similar pattern here.
+Let me think of a scenario where a bird and a tree interact. Maybe the bird is perched on a tree, or the tree is"
+2025-12-11T00:24:23.576480,,"cat, moon",mysterious,llm,Qwen/Qwen3-1.7B:featherless-ai,5,4,,,,"I'm chasing the moon through the night
+With a cat that's got a curious light
+It flickers in the shadows it stays
+A mystery that's hard to grasp
+The stars are distant, the sky is wide
+But the moon is guiding me through
+A path I don't know, I just feel
+It's calling me, and I'm drawn to you"
+2025-12-11T00:47:20.421543,,"sun, flower",happy,llm,Qwen/Qwen3-1.7B:featherless-ai,5,5,3,,,"Sunlight spills on the ground, it's so bright
+A flower blooms in the garden, it's so tight
+We chase the day, we laugh and we play
+The world feels small, but we're so happy
+Sunlight paints the sky, it's so warm
+A flower stands in the field, it's so strong
+We dance in the breeze, we feel the beat
+The heart is light, and the mood is sweet"
+2025-12-11T00:48:02.917557,,"rain, umbrella",sad,llm,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"Rain taps on the windows, it's a constant sound
+Umbrella stays in the hand, it's the only thing I have
+I'm stuck in the rain, I can't find a way to go
+It's pouring, and I'm drowning in the tears I've got
+The world feels so far, but I'm here with you
+We're chasing the light, but it's always just out of reach
+I need to feel the rain, to let it wash away
+But I can't move, I'm caught in the storm and the haze"
+2025-12-11T00:48:11.106054,,"bird, tree",calm,llm,Qwen/Qwen3-1.7B:featherless-ai,,,,,,"So the wind blows through the leaves
+A song in the trees, it's a breeze
+The bird flies high in the sky
+It's a quiet place, it's a sigh
+The tree stands tall in the distance
+Its roots deep, it's a strength
+The bird watches the world go by
+And the tree holds the time and the sky"

@@ -125,6 +125,7 @@ class LyricGenerator:
                 "Nothing can compare.\n"
                 "The {label} shows us how to care,\n"
                 "With energy beyond compare."
+            ],
             "romantic": [
                 "The {label} blooms in spring's embrace,\n"
                 "Filling hearts with gentle grace.\n"

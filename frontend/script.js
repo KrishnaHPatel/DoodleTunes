@@ -54,6 +54,12 @@
     void lyricsEl.offsetWidth;
     lyricsEl.classList.add("fade-in");
 
+    // Also sync to playback textarea if present
+    const playbackTextarea = document.getElementById("lyrics-input");
+    if (playbackTextarea) {
+      playbackTextarea.value = data.lyrics || "";
+    }
+
     // Render meta as chips
     const chips = [];
     if (Array.isArray(data.labels)) chips.push(`<span class="chip">Labels: ${data.labels.join(", ")}</span>`);
