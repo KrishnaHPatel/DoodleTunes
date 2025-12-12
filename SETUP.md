@@ -1,59 +1,288 @@
-# Setup Instructions
+# DoodleTunes Setup Guide
 
-## Backend Setup
+Complete setup instructions for running DoodleTunes on a new machine.
 
-1. **Install Python dependencies:**
+## Prerequisites
+
+- Python 3.8 or higher
+- pip (Python package manager)
+- Git
+
+## Step 1: Clone the Repository
+
+```bash
+git clone <repository-url>
+cd DoodleTunes
+```
+
+## Step 2: Install Python Dependencies
+
+Install all required Python packages:
+
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+**Required packages:**
+- `flask` - Web server framework
+- `flask-cors` - Cross-origin resource sharing
+- `piper-tts` - Text-to-speech synthesis
+- `requests` - HTTP library for API calls
+
+## Step 3: Set Up Hugging Face Token (for LLM)
+
+The lyric generation feature requires a Hugging Face API token.
+
+1. **Get your token:**
+   - Go to https://huggingface.co/settings/tokens
+   - Create a new token (read access is sufficient)
+
+2. **Add token to your shell configuration:**
    ```bash
-   cd backend
-   pip install -r requirements.txt
+   nano ~/.zshrc
    ```
-
-2. **Download Piper voice model:**
    
-   Option A (using piper-tts package):
+   Add this line (replace `your_token_here` with your actual token):
    ```bash
-   python -m piper.download_voices --output-dir voices en_US-lessac-medium
-   ```
-   
-   Option B (manual download):
-   - Go to: https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_US/lessac/medium
-   - Download:
-     - `en_US-lessac-medium.onnx`
-     - `en_US-lessac-medium.onnx.json`
-   - Place both files in `backend/voices/`
-
-3. **Start backend server:**
-   ```bash
-   cd backend
-   python src/server.py
-   ```
-   Server runs on http://localhost:5000
-
-## Frontend Setup
-
-1. **Install dependencies:**
-   ```bash
-   cd frontend
-   npm install
+   export HF_TOKEN=your_token_here
    ```
 
-2. **Start frontend server:**
+3. **Reload your shell configuration:**
    ```bash
-   npm start
+   source ~/.zshrc
    ```
-   Frontend runs on http://localhost:3000
 
-## Usage
+4. **Verify it's set:**
+   ```bash
+   echo $HF_TOKEN
+   ```
 
-1. Make sure backend is running (port 5000)
-2. Open http://localhost:3000 in browser
-3. Enter lyrics in the textarea (one line per verse)
-4. Select a mood
-5. Click "Play" to hear the poetic voice with mood-matched melody
+**Note:** If you don't set `HF_TOKEN`, the app will fall back to template-based lyrics instead of using the LLM.
+
+## Step 4: Install Piper TTS and Download Voice Files
+
+### Install Piper TTS Package
+
+```bash
+pip install piper-tts
+```
+
+### Download Voice Files
+
+The app needs voice model files for each mood. You need to download 6 voice models (one for each mood).
+
+**Voice files structure:**
+```
+backend/voices/
+├── Happy/
+│   ├── en_US-ryan-high.onnx
+│   └── en_US-ryan-high.onnx.json
+├── Sad/
+│   ├── en_US-libritts-high.onnx
+│   └── en_US-libritts-high.onnx.json
+├── Calm/
+│   ├── en_US-kristin-medium.onnx
+│   └── en_US-kristin-medium.onnx.json
+├── Angry/
+│   ├── en_US-john-medium.onnx
+│   └── en_US-john-medium.onnx.json
+├── Romantic/
+│   ├── en_GB-northern_english_male-medium.onnx
+│   └── en_GB-northern_english_male-medium.onnx.json
+└── Energetic/
+    ├── en_GB-semaine-medium.onnx
+    └── en_GB-semaine-medium.onnx.json
+```
+
+**How to download:**
+
+1. Go to https://huggingface.co/rhasspy/piper-voices/tree/main
+2. Navigate to each voice folder and download both `.onnx` and `.onnx.json` files:
+
+   **Happy:**
+   - https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_US/ryan/high
+   - Download: `en_US-ryan-high.onnx` and `en_US-ryan-high.onnx.json`
+   - Place in: `backend/voices/Happy/`
+
+   **Sad:**
+   - https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_US/libritts/high
+   - Download: `en_US-libritts-high.onnx` and `en_US-libritts-high.onnx.json`
+   - Place in: `backend/voices/Sad/`
+
+   **Calm:**
+   - https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_US/kristin/medium
+   - Download: `en_US-kristin-medium.onnx` and `en_US-kristin-medium.onnx.json`
+   - Place in: `backend/voices/Calm/`
+
+   **Angry:**
+   - https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_US/john/medium
+   - Download: `en_US-john-medium.onnx` and `en_US-john-medium.onnx.json`
+   - Place in: `backend/voices/Angry/`
+
+   **Romantic:**
+   - https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_GB/northern_english_male/medium
+   - Download: `en_GB-northern_english_male-medium.onnx` and `en_GB-northern_english_male-medium.onnx.json`
+   - Place in: `backend/voices/Romantic/`
+
+   **Energetic:**
+   - https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_GB/semaine/medium
+   - Download: `en_GB-semaine-medium.onnx` and `en_GB-semaine-medium.onnx.json`
+   - Place in: `backend/voices/Energetic/`
+
+**Note:** Each voice file is 60-120MB, so downloading all 6 moods requires ~500MB of space.
+
+**Verify your voice files:**
+```bash
+ls -la backend/voices/*/*.onnx
+ls -la backend/voices/*/*.onnx.json
+```
+
+You should see 12 files total (6 moods × 2 files each).
+
+## Step 5: Optional - Install BEiT Dependencies (for Image Recognition)
+
+The image recognition feature (Page 1) requires additional dependencies:
+
+```bash
+pip install torch transformers Pillow
+```
+
+**Note:** These are large packages (~2GB total). If you don't install them, the image recognition feature will not work, but the rest of the app (lyric generation and playback) will still function.
+
+## Step 6: Optional - Download Custom Melody Files
+
+If you have custom melody WAV files, place them in:
+
+```
+frontend/melodies/
+├── Happy_Melody.wav
+├── Sad_Melody.wav
+├── Calm_Melody.wav
+├── Angry_Melody.wav
+├── Romantic_Melody.wav
+└── Energetic_Melody.wav
+```
+
+**Note:** If melody files are not present, the app will automatically generate melodies using Tone.js.
+
+## Step 7: Run the Server
+
+```bash
+cd backend
+python app.py
+```
+
+Or with Python 3 explicitly:
+
+```bash
+cd backend
+python3 app.py
+```
+
+You should see:
+```
+🎵 DoodleTunes Unified Server starting...
+Server running on http://localhost:8001
+```
+
+## Step 8: Open in Browser
+
+Navigate to: **http://localhost:8001**
+
+The app will load the intro page, and you can start using DoodleTunes!
+
+---
 
 ## Troubleshooting
 
-- **Backend error "Voice files not found"**: Make sure you downloaded the Piper voice files to `backend/voices/`
-- **CORS errors**: Make sure backend is running and Flask-CORS is installed
-- **Audio not playing**: Check browser console for errors, make sure you click "Play" (required for audio context)
+### "Voice files not found" error
+- Make sure you downloaded all voice files to `backend/voices/<Mood>/`
+- Each mood folder should contain both `.onnx` and `.onnx.json` files
+- Check file names match exactly (case-sensitive)
 
+### "401 Unauthorized" or lyrics using templates
+- Make sure `HF_TOKEN` is set in your environment
+- Restart the Flask server after setting the token
+- Verify with: `echo $HF_TOKEN`
+- Check your token is valid at https://huggingface.co/settings/tokens
+
+### BEiT image recognition not working
+- Install optional dependencies: `pip install torch transformers Pillow`
+- The model downloads automatically on first use (may take a few minutes)
+- Check server logs for import errors
+
+### Port already in use
+- Change the port: `export PORT=8002` (or any available port)
+- Or kill the process using port 8001
+
+### "Module not found" errors
+- Make sure you're in the correct Python environment
+- Try: `pip install -r backend/requirements.txt` again
+- Check that you're using the same Python version that has the packages installed
+
+---
+
+## Quick Setup Checklist
+
+- [ ] Cloned the repository
+- [ ] Installed Python dependencies (`pip install -r backend/requirements.txt`)
+- [ ] Set `HF_TOKEN` in `~/.zshrc` and reloaded shell
+- [ ] Installed `piper-tts` package
+- [ ] Downloaded all 6 voice model files to `backend/voices/`
+- [ ] (Optional) Installed `torch transformers Pillow` for image recognition
+- [ ] (Optional) Added custom melody files to `frontend/melodies/`
+- [ ] Started the server with `python backend/app.py`
+- [ ] Opened http://localhost:8001 in browser
+
+---
+
+## Application Flow
+
+1. **Intro Page** → Welcome screen with "Get Started" button
+2. **Page 1 (Drawing)** → Sketch or upload 3 images → BEiT generates labels
+3. **Page 2 (Lyrics)** → Labels auto-filled → Select mood → Generate lyrics → Click "Next"
+4. **Page 3 (Playback)** → Lyrics + mood auto-loaded → Click "Play" to hear TTS + melody
+
+---
+
+## File Structure
+
+```
+DoodleTunes/
+├── backend/
+│   ├── app.py              # Unified Flask server (run this!)
+│   ├── requirements.txt    # Python dependencies
+│   ├── voices/             # Voice model files (download required)
+│   │   ├── Happy/
+│   │   ├── Sad/
+│   │   ├── Calm/
+│   │   ├── Angry/
+│   │   ├── Romantic/
+│   │   └── Energetic/
+│   └── src/
+│       └── tts/           # TTS implementation
+├── frontend/
+│   ├── intro.html         # Welcome page
+│   ├── drawing.html       # Page 1: Image recognition
+│   ├── index.html         # Page 2: Lyric generation
+│   ├── playback.html      # Page 3: Audio playback
+│   ├── melodies/          # Custom melody files (optional)
+│   └── src/               # Frontend JavaScript
+└── SETUP.md               # This file
+```
+
+---
+
+## API Endpoints
+
+- `POST /api/predict` - BEiT image classification
+- `POST /api/generate-lyrics` - Generate lyrics from labels + mood
+- `POST /api/render` - Render lyrics to speech (TTS)
+
+## Pages
+
+- `/` - Intro/welcome page
+- `/drawing.html` - Drawing/upload page
+- `/lyrics.html` - Lyric generation page
+- `/playback.html` - Audio playback page
