@@ -30,13 +30,6 @@ pip install -r requirements.txt
 - `requests` - HTTP library for API calls
 - `torch`, `transformers`, `Pillow` - For BEiT image recognition (~2GB total download)
 
-**Note:** `numpy` must be below version 2.0 for compatibility. If you encounter numpy-related errors, install a compatible version:
-```bash
-pip install "numpy<2.0"
-```
-
-**Note:** If you don't need the image recognition feature, you can comment out `torch`, `transformers`, and `Pillow` in `requirements.txt` before running `pip install` to skip the large download. The rest of the app (lyric generation and playback) will still function without them.
-
 ## Step 3: Set Up Hugging Face Token (for LLM)
 
 The lyric generation feature requires a Hugging Face API token.
@@ -104,7 +97,6 @@ backend/voices/
 
 **How to download:**
 
-1. Go to https://huggingface.co/rhasspy/piper-voices/tree/main
 2. Navigate to each voice folder and download both `.onnx` and `.onnx.json` files:
 
    **Happy:**
@@ -236,6 +228,10 @@ DoodleTunes/
 - Ensure dependencies installed: `pip install torch transformers Pillow`
 - The model downloads automatically on first use (may take a few minutes)
 - Check server logs for import errors
+- **NumPy compatibility**: `numpy` must be below version 2.0. If you encounter numpy-related errors, install a compatible version:
+  ```bash
+  pip install "numpy<2.0"
+  ```
 - **If having trouble loading the model**, you can modify `backend/app.py` in the `load_beit_model()` function to add `use_auth_token=False`:
   ```python
   processor = BeitImageProcessor.from_pretrained(MODEL_NAME, use_safetensors=True, use_auth_token=False)
