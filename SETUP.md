@@ -185,11 +185,10 @@ DoodleTunes/
 │   │   ├── Angry/
 │   │   ├── Romantic/
 │   │   └── Energetic/
-│   ├── src/
-│   │   └── tts/            # TTS implementation
-│   │       ├── piper.py    # Piper TTS wrapper
-│   │       └── pacing.py   # Mood-based pacing and pauses
-│   └── piper/              # Piper binary and dependencies
+│   └── src/
+│       └── tts/            # TTS implementation
+│           ├── piper.py    # Piper TTS wrapper
+│           └── pacing.py   # Mood-based pacing and pauses
 ├── frontend/
 │   ├── intro.html          # Welcome page (root /)
 │   ├── drawing.html        # Page 1: Image recognition
