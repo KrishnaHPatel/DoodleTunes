@@ -114,6 +114,35 @@
       transform: translateY(-1px);
     }
 
+    .restart-btn-top {
+      position: absolute;
+      right: 0;
+      top: 0;
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .restart-btn-top:hover {
+      background: #059669;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
+    .restart-btn-top:active {
+      transform: translateY(0);
+    }
+
     h1 {
       margin: 0;
       font-size: 44px;
@@ -372,6 +401,7 @@
     <div class="hero">
       <a href="index.html" class="back-button">← Back</a>
       <h1>DoodleTunes</h1>
+      <a href="/" class="restart-btn-top">Restart</a>
     </div>
 
     <!-- Playback Panel -->
@@ -419,9 +449,6 @@
         </div>
         <div class="status" id="status">Ready</div>
       </div>
-    </div>
-    <div style="text-align: center; margin-top: 32px;">
-      <a href="/" class="restart-btn">Restart</a>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.js"></script>
