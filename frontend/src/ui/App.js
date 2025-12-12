@@ -26,11 +26,9 @@ export class App {
   setupButtons() {
     const playBtn = document.getElementById('play-btn');
     const stopBtn = document.getElementById('stop-btn');
-    const generateBtn = document.getElementById('generate-btn');
 
     playBtn.addEventListener('click', () => this.handlePlay());
     stopBtn.addEventListener('click', () => this.handleStop());
-    generateBtn.addEventListener('click', () => this.handleGenerate());
   }
 
   setupVolumeControls() {
@@ -49,13 +47,9 @@ export class App {
       const value = e.target.value;
       musicVolValue.textContent = value + '%';
       this.mixer.setMusicVolume(value / 100);
+      // Also update custom melody volume if playing
+      this.melodyPlayer.setVolume(value / 100);
     });
-  }
-
-  async handleGenerate() {
-    // TODO: Call your lyric generator API
-    // For now, just use the textarea content
-    this.updateStatus('Lyrics ready (using textarea content)');
   }
 
   async handlePlay() {
@@ -65,7 +59,7 @@ export class App {
       this.isPlaying = true;
       this.updateStatus('Rendering voice...');
       
-      // Get lyrics and mood
+      // Get lyrics and mood (voice is automatically selected based on mood)
       const lyricsText = document.getElementById('lyrics-input').value;
       const lyricsLines = lyricsText.split('\n').filter(line => line.trim());
       const mood = document.getElementById('mood-select').value;
@@ -78,40 +72,57 @@ export class App {
       document.getElementById('play-btn').disabled = true;
       document.getElementById('stop-btn').disabled = false;
 
-      // Fetch TTS chunks from backend
+      // Fetch TTS chunks from backend (voice is selected automatically by mood)
       const response = await this.apiClient.render(lyricsLines, mood);
       this.currentChunks = response.chunks;
 
       this.updateStatus('Starting playback...');
       
-      // Initialize audio context
+      // Start Tone.js first (creates audio context)
       await Tone.start();
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      
+      // Get the native AudioContext from Tone
+      // Tone.context has a 'rawContext' property in newer versions
+      const toneContext = Tone.context;
+      const audioContext = toneContext.rawContext || 
+                          toneContext._context || 
+                          (toneContext instanceof AudioContext ? toneContext : new (window.AudioContext || window.webkitAudioContext)());
+      
       if (audioContext.state === 'suspended') {
         await audioContext.resume();
       }
 
-      // Setup mixer
-      this.mixer.init(audioContext);
+      // Setup mixer with native AudioContext
+      if (!this.mixer.audioContext) {
+        this.mixer.init(audioContext);
+      }
+      
+      // Verify mixer is ready
+      const voiceInput = this.mixer.getVoiceInput();
+      const musicInput = this.mixer.getMusicInput();
+      
+      if (!voiceInput || !musicInput) {
+        throw new Error('Mixer not properly initialized');
+      }
 
       // Get mood profile for melody
       const moodProfile = this.getMoodProfile(mood);
       moodProfile.mood = mood; // Add mood name for melody selection
 
-      // Start melody
-      this.melodyPlayer.start(moodProfile, this.mixer.getMusicInput());
+      // Start melody (will use custom file if available, otherwise Tone.js)
+      await this.melodyPlayer.start(moodProfile, musicInput);
 
       // Start voice playback
-      await this.voicePlayer.play(response.chunks, this.mixer.getVoiceInput(), () => {
+      await this.voicePlayer.play(response.chunks, voiceInput, () => {
         this.handleStop();
       });
 
       this.updateStatus('Playing...');
-      this.showProgress(response.chunks.length);
 
     } catch (error) {
       console.error('Playback error:', error);
-      this.updateStatus('Error: ' + error.message);
+      console.error('Error stack:', error.stack);
+      this.updateStatus('Error: ' + (error.message || 'Unknown error. Check console for details.'));
       this.isPlaying = false;
       document.getElementById('play-btn').disabled = false;
       document.getElementById('stop-btn').disabled = true;
@@ -124,7 +135,6 @@ export class App {
     this.isPlaying = false;
     this.voicePlayer.stop();
     this.melodyPlayer.stop();
-    this.hideProgress();
 
     document.getElementById('play-btn').disabled = false;
     document.getElementById('stop-btn').disabled = true;
@@ -135,11 +145,9 @@ export class App {
     const profiles = {
       "Calm": { bpm: 80 },
       "Sad": { bpm: 70 },
-      "Mysterious": { bpm: 90 },
       "Romantic": { bpm: 85 },
-      "Hopeful": { bpm: 105 },
       "Happy": { bpm: 120 },
-      "Excited": { bpm: 150 },
+      "Energetic": { bpm: 150 },
       "Angry": { bpm: 140 }
     };
     return profiles[mood] || profiles["Calm"];
@@ -152,19 +160,5 @@ export class App {
     }
   }
 
-  showProgress(totalLines) {
-    const progressEl = document.getElementById('progress');
-    if (progressEl) {
-      progressEl.style.display = 'block';
-    }
-    // TODO: Update progress as lines play
-  }
-
-  hideProgress() {
-    const progressEl = document.getElementById('progress');
-    if (progressEl) {
-      progressEl.style.display = 'none';
-    }
-  }
 }
 

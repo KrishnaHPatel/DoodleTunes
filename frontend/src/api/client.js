@@ -1,7 +1,7 @@
 /**
  * API Client for backend communication
  */
-const API_BASE = 'http://localhost:5000';
+const API_BASE = 'http://localhost:5001';
 
 export class ApiClient {
   async render(lyricsLines, mood) {
@@ -13,6 +13,7 @@ export class ApiClient {
       body: JSON.stringify({
         lyricsLines,
         mood
+        // Voice is automatically selected based on mood
       })
     });
 

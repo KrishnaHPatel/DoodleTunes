@@ -8,17 +8,39 @@ export class VoicePlayer {
   }
 
   async play(chunks, destination, onComplete) {
+    if (!chunks || chunks.length === 0) {
+      throw new Error('No audio chunks provided');
+    }
+    
     this.onComplete = onComplete;
     const audioContext = destination.context;
+    
+    if (!audioContext) {
+      throw new Error('Audio context not available');
+    }
+    
     const now = audioContext.currentTime;
     let currentTime = now + 0.05; // Small delay for stability
 
     // Decode all chunks
     const audioBuffers = [];
-    for (const chunk of chunks) {
-      const audioBytes = Uint8Array.from(atob(chunk.audioBase64), c => c.charCodeAt(0));
-      const audioBuffer = await audioContext.decodeAudioData(audioBytes.buffer);
-      audioBuffers.push({ buffer: audioBuffer, pauseMs: chunk.pauseMs });
+    for (let i = 0; i < chunks.length; i++) {
+      const chunk = chunks[i];
+      try {
+        // Decode base64 to binary
+        const binaryString = atob(chunk.audioBase64);
+        const audioBytes = new Uint8Array(binaryString.length);
+        for (let j = 0; j < binaryString.length; j++) {
+          audioBytes[j] = binaryString.charCodeAt(j);
+        }
+        
+        // Decode audio data
+        const audioBuffer = await audioContext.decodeAudioData(audioBytes.buffer.slice(0));
+        audioBuffers.push({ buffer: audioBuffer, pauseMs: chunk.pauseMs });
+      } catch (error) {
+        console.error(`Error decoding chunk ${i}:`, error);
+        throw new Error(`Failed to decode audio chunk ${i + 1}: ${error.message}`);
+      }
     }
 
     // Schedule playback

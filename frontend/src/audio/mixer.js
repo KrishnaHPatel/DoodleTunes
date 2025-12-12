@@ -10,6 +10,16 @@ export class Mixer {
   }
 
   init(audioContext) {
+    if (this.audioContext) {
+      // Already initialized
+      return;
+    }
+    
+    // Ensure we have a native AudioContext
+    if (!audioContext || typeof audioContext.createGain !== 'function') {
+      throw new Error('Invalid AudioContext provided to mixer');
+    }
+    
     this.audioContext = audioContext;
     
     // Create gain nodes

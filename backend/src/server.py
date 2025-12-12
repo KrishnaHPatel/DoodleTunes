@@ -16,7 +16,7 @@ from tts.piper import synthesize_text
 from tts.pacing import compute_pauses, get_mood_profile
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # In-memory cache for TTS results
 tts_cache: Dict[str, bytes] = {}
@@ -66,16 +66,19 @@ def render():
         chunks = []
         total_ms = 0
         
+        # Voice is automatically selected based on mood
+        # (voice parameter is ignored, mood determines the voice)
+        
         for i, line in enumerate(lyrics_lines):
-            # Generate cache key
-            cache_key = hashlib.md5(f"en_US-lessac-medium:{line}".encode()).hexdigest()
+            # Generate cache key using mood (since voice is mood-based)
+            cache_key = hashlib.md5(f"{mood}:{line}".encode()).hexdigest()
             
             # Check cache
             if cache_key in tts_cache:
                 wav_bytes = tts_cache[cache_key]
             else:
-                # Synthesize with Piper
-                wav_bytes = synthesize_text(line)
+                # Synthesize with Piper using mood to select voice
+                wav_bytes = synthesize_text(line, mood=mood)
                 tts_cache[cache_key] = wav_bytes
             
             # Encode to base64
@@ -106,10 +109,15 @@ def render():
                 chunk['pauseMs'] = max(chunk['pauseMs'] - 40, 120)
             total_ms = sum(c['pauseMs'] for c in chunks) + len(chunks) * 200
         
+        # Get the actual voice name used for this mood
+        from tts.piper import MOOD_VOICE_MAP
+        actual_voice = MOOD_VOICE_MAP.get(mood, MOOD_VOICE_MAP["Calm"])
+        
         return jsonify({
             "chunks": chunks,
             "meta": {
-                "voice": "en_US-lessac-medium",
+                "voice": actual_voice,
+                "mood": mood,
                 "estimatedTotalMs": int(total_ms)
             }
         })
@@ -122,7 +130,9 @@ def health():
     return jsonify({'status': 'ok'})
 
 if __name__ == '__main__':
+    import sys
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else 5001
     print("🎵 DoodleTunes TTS Server starting...")
-    print("Server running on http://localhost:5000")
-    app.run(debug=True, port=5000)
+    print(f"Server running on http://localhost:{port}")
+    app.run(debug=True, port=port)
 

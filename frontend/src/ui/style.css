@@ -63,6 +63,13 @@ h1 {
     cursor: pointer;
 }
 
+.voice-info {
+    display: flex;
+    align-items: center;
+    color: #666;
+    font-size: 0.9em;
+}
+
 .volume-controls {
     display: flex;
     gap: 20px;

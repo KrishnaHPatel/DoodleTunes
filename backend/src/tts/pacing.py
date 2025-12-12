@@ -14,27 +14,17 @@ MOOD_PROFILES = {
         "basePauseMs": 520,
         "pauseScale": 1.25
     },
-    "Mysterious": {
-        "bpm": 90,
-        "basePauseMs": 480,
-        "pauseScale": 1.2
-    },
     "Romantic": {
         "bpm": 85,
         "basePauseMs": 500,
         "pauseScale": 1.2
-    },
-    "Hopeful": {
-        "bpm": 105,
-        "basePauseMs": 380,
-        "pauseScale": 1.05
     },
     "Happy": {
         "bpm": 120,
         "basePauseMs": 320,
         "pauseScale": 0.95
     },
-    "Excited": {
+    "Energetic": {
         "bpm": 150,
         "basePauseMs": 240,
         "pauseScale": 0.85
