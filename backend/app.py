@@ -21,6 +21,14 @@ _beit_device = None
 def load_beit_model():
     """Lazy load BEiT model only when needed"""
     global _beit_model, _beit_processor, _beit_device
+    
+    # If model failed previously, reset and try again (in case dependencies were installed)
+    if _beit_model is False:
+        print("⚠ BEiT model failed previously, resetting and retrying...")
+        _beit_model = None
+        _beit_processor = None
+        _beit_device = None
+    
     if _beit_model is None:
         try:
             import torch
@@ -48,7 +56,7 @@ def load_beit_model():
             raise
     
     if _beit_model is False:
-        raise Exception("BEiT model failed to load previously")
+        raise Exception("BEiT model failed to load. Please check that torch and transformers are installed.")
         
     return _beit_model, _beit_processor, _beit_device
 

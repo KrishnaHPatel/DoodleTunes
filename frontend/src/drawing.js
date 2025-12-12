@@ -265,34 +265,69 @@ async function generateLabel(slotIndex) {
 
         const dataUrl = cropped.toDataURL("image/png");
 
-        // Use relative URL to work with unified backend
-        const response = await fetch("/api/predict", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ image: dataUrl })
-        });
+        // Retry logic with delay for first-time model loading
+        let lastError = null;
+        const maxRetries = 3;
+        const retryDelay = 2000; // 2 seconds
+        
+        for (let attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                // Use relative URL to work with unified backend
+                const response = await fetch("/api/predict", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ image: dataUrl })
+                });
 
-        if (!response.ok) {
-            throw new Error(`Server error: ${response.status}`);
-        }
+                if (!response.ok) {
+                    // If 503 (service unavailable), retry after delay
+                    if (response.status === 503 && attempt < maxRetries - 1) {
+                        await new Promise(resolve => setTimeout(resolve, retryDelay));
+                        continue;
+                    }
+                    throw new Error(`Server error: ${response.status}`);
+                }
 
-        const result = await response.json();
-        
-        // Check if there's an error in the response
-        if (result.error) {
-            console.error("BEiT API error:", result.error);
-            labelText.textContent = "Error";
-            updateReviewSection(slotIndex, "Error");
-            return;
+                const result = await response.json();
+                
+                // Check if there's an error in the response
+                if (result.error) {
+                    // If model is loading, retry after delay
+                    if (result.error.includes("not available") || result.error.includes("not loaded") || result.error.includes("Model")) {
+                        if (attempt < maxRetries - 1) {
+                            await new Promise(resolve => setTimeout(resolve, retryDelay));
+                            continue;
+                        }
+                    }
+                    console.error("BEiT API error:", result.error);
+                    labelText.textContent = "Error";
+                    updateReviewSection(slotIndex, "Error");
+                    loading.style.display = "none";
+                    return;
+                }
+                
+                // Success!
+                const label = result.label || "unknown";
+                labelText.textContent = label;
+                updateReviewSection(slotIndex, label);
+                loading.style.display = "none";
+                return;
+                
+            } catch (err) {
+                lastError = err;
+                // If it's a network error or 503, retry after delay
+                if (attempt < maxRetries - 1) {
+                    await new Promise(resolve => setTimeout(resolve, retryDelay));
+                    continue;
+                }
+            }
         }
         
-        const label = result.label || "unknown";
-        labelText.textContent = label;
+        // All retries failed
+        throw lastError || new Error("Failed after multiple attempts");
         
-        // Update the review section with the generated label
-        updateReviewSection(slotIndex, label);
     } catch (err) {
         console.error("Error calling BEiT server:", err);
         labelText.textContent = "Error";
