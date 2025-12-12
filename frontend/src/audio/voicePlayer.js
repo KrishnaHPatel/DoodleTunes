@@ -11,19 +11,19 @@ export class VoicePlayer {
     if (!chunks || chunks.length === 0) {
       throw new Error('No audio chunks provided');
     }
-    
+
     this.onComplete = onComplete;
     const audioContext = destination.context;
-    
+
     if (!audioContext) {
       throw new Error('Audio context not available');
     }
-    
+
     // Ensure context is running
     if (audioContext.state === 'suspended') {
       await audioContext.resume();
     }
-    
+
     const now = audioContext.currentTime;
     let currentTime = now + 0.1; // Small delay for stability
 
@@ -38,7 +38,7 @@ export class VoicePlayer {
         for (let j = 0; j < binaryString.length; j++) {
           audioBytes[j] = binaryString.charCodeAt(j);
         }
-        
+
         // Decode audio data
         const audioBuffer = await audioContext.decodeAudioData(audioBytes.buffer.slice(0));
         audioBuffers.push({ buffer: audioBuffer, pauseMs: chunk.pauseMs });
@@ -53,7 +53,7 @@ export class VoicePlayer {
       const { buffer, pauseMs } = audioBuffers[i];
       const source = audioContext.createBufferSource();
       source.buffer = buffer;
-      
+
       // Fade in/out to prevent clicks
       const gain = audioContext.createGain();
       gain.gain.setValueAtTime(0, currentTime);

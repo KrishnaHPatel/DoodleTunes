@@ -146,18 +146,30 @@ class LyricGenerator:
         # Try LLM generation first
         try:
             lyrics = self._generate_with_llm(request)
-            if lyrics and self._validate_lyrics(lyrics, request):
-                return LyricResponse(
-                    lyrics=lyrics,
-                    source="llm",
-                    labels_used=request.labels,
-                    emotion=request.emotion,
-                    model=self.model_name
-                )
+            if lyrics:
+                # Try validation, but be lenient - if LLM returned something, use it
+                if self._validate_lyrics(lyrics, request) or len(lyrics.strip()) > 50:
+                    return LyricResponse(
+                        lyrics=lyrics,
+                        source="llm",
+                        labels_used=request.labels,
+                        emotion=request.emotion,
+                        model=self.model_name
+                    )
+                else:
+                    print(f"LLM response failed validation, but using it anyway: {len(lyrics)} chars")
+                    return LyricResponse(
+                        lyrics=lyrics,
+                        source="llm",
+                        labels_used=request.labels,
+                        emotion=request.emotion,
+                        model=self.model_name
+                    )
         except Exception as e:
             print(f"LLM generation failed: {e}")
         
-        # Fall back to template
+        # Fall back to template only if LLM completely failed
+        print("Falling back to template - LLM generation failed")
         lyrics = self._generate_with_template(request)
         return LyricResponse(
             lyrics=lyrics,
@@ -249,7 +261,7 @@ Write ONLY the lyrics, don't include any other text,one line per line, no number
         return f"<s>[INST] {content.strip()} [/INST]"
     
     def _call_huggingface(self, prompt: str) -> Optional[str]:
-        """Call Hugging Face Router chat/completions (requires HF token)"""
+        """Call Hugging Face Router chat/completions"""
         api_key = os.getenv("HF_TOKEN") or self.api_key
         
         url = "https://router.huggingface.co/v1/chat/completions"
@@ -277,10 +289,24 @@ Write ONLY the lyrics, don't include any other text,one line per line, no number
             if response.status_code == 200:
                 result = response.json()
                 content = result.get("choices", [{}])[0].get("message", {}).get("content", "")
-                return self._clean_lyrics(content)
+                cleaned = self._clean_lyrics(content)
+                if cleaned:
+                    return cleaned
+            elif response.status_code == 401:
+                # Try without auth token - some public models work without auth
+                if api_key:
+                    headers_no_auth = {"Content-Type": "application/json"}
+                    response_no_auth = requests.post(url, headers=headers_no_auth, json=payload, timeout=30)
+                    if response_no_auth.status_code == 200:
+                        result = response_no_auth.json()
+                        content = result.get("choices", [{}])[0].get("message", {}).get("content", "")
+                        cleaned = self._clean_lyrics(content)
+                        if cleaned:
+                            return cleaned
+                print(f"Hugging Face Router authentication error: {response.status_code}. Please set HF_TOKEN environment variable.")
             else:
                 print(f"Hugging Face Router error: {response.status_code} - {response.text[:200]}")
-                return None
+            return None
         except Exception as e:
             print(f"Hugging Face Router exception: {e}")
             return None
