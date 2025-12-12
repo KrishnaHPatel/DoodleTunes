@@ -1,0 +1,23 @@
+{
+  "name": "doodletunes",
+  "version": "1.0.0",
+  "description": "Turning doodles into short, AI-generated musical clips",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 8080 -o",
+    "dev": "npx http-server . -p 8080 -o"
+  },
+  "keywords": [
+    "doodle",
+    "music",
+    "ai",
+    "cv",
+    "tensorflow"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
+
