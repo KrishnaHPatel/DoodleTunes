@@ -232,7 +232,7 @@ if __name__ == "__main__":
     
     # Define test cases
     test_cases = [
-        {"labels": ["cat", "moon"], "emotion": "mysterious", "num_lines": 8},
+        {"labels": ["cat", "moon"], "emotion": "energetic", "num_lines": 8},
         {"labels": ["sun", "flower"], "emotion": "happy", "num_lines": 8},
         {"labels": ["rain", "umbrella"], "emotion": "sad", "num_lines": 8},
         {"labels": ["bird", "tree"], "emotion": "calm", "num_lines": 8},

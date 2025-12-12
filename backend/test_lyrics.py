@@ -19,8 +19,8 @@ def test_generator(provider="huggingface", model=None):
     test_cases = [
         {
             "labels": ["cat", "moon"],
-            "emotion": "mysterious",
-            "description": "Mysterious cat and moon"
+            "emotion": "calm",
+            "description": "Calm cat and moon"
         },
         {
             "labels": ["sun", "flower"],
@@ -34,8 +34,8 @@ def test_generator(provider="huggingface", model=None):
         },
         {
             "labels": ["bird", "tree", "sky"],
-            "emotion": "calm",
-            "description": "Calm bird, tree, and sky"
+            "emotion": "energetic",
+            "description": "energetic bird, tree, and sky"
         },
     ]
     
