@@ -283,8 +283,8 @@ async function generateLabel(slotIndex) {
         // Check if there's an error in the response
         if (result.error) {
             console.error("BEiT API error:", result.error);
-            labelText.textContent = "error";
-            updateReviewSection(slotIndex, "error");
+            labelText.textContent = "Error";
+            updateReviewSection(slotIndex, "Error");
             return;
         }
         
@@ -295,8 +295,8 @@ async function generateLabel(slotIndex) {
         updateReviewSection(slotIndex, label);
     } catch (err) {
         console.error("Error calling BEiT server:", err);
-        labelText.textContent = "error";
-        updateReviewSection(slotIndex, "error");
+        labelText.textContent = "Error";
+        updateReviewSection(slotIndex, "Error");
     } finally {
         loading.style.display = "none";
     }
