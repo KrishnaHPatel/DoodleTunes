@@ -82,10 +82,12 @@
   }
 
   generateBtn.addEventListener("click", () => {
+    const modeSel = document.getElementById("mode");
     const req = {
       labels: parseLabels(labelsEl.value),
       emotion: (emotionEl.value || "calm").trim(),
       num_lines: 8,
+      mode: modeSel ? modeSel.value : "auto",
     };
     lastRequest = req;
     callGenerate(req);

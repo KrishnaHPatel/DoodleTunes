@@ -83,17 +83,49 @@ def generate_lyrics_api():
     labels = data.get("labels", [])
     emotion = data.get("emotion", "happy")
     num_lines = int(data.get("num_lines", 8))
+    mode = (data.get("mode") or "auto").lower()  # 'auto' | 'llm' | 'template'
 
     req = LyricRequest(labels=labels, emotion=emotion, num_lines=num_lines)
-    resp = generator.generate_lyrics(req)
-    return jsonify({
-        "lyrics": resp.lyrics,
-        "source": resp.source,
-        "model": resp.model,
-        "labels": resp.labels_used,
-        "emotion": resp.emotion,
-        "num_lines": num_lines
-    })
+    # Support forced mode selection
+    if mode == "template":
+        lyrics = generator._generate_with_template(req)
+        return jsonify({
+            "lyrics": lyrics,
+            "source": "template",
+            "model": generator.model_name,
+            "labels": req.labels,
+            "emotion": req.emotion,
+            "num_lines": num_lines,
+            "mode_requested": mode
+        })
+    elif mode == "llm":
+        lyrics = generator._generate_with_llm(req)
+        # If LLM fails, gracefully fall back to template
+        if not lyrics:
+            lyrics = generator._generate_with_template(req)
+            source = "template"
+        else:
+            source = "llm"
+        return jsonify({
+            "lyrics": lyrics,
+            "source": source,
+            "model": generator.model_name,
+            "labels": req.labels,
+            "emotion": req.emotion,
+            "num_lines": num_lines,
+            "mode_requested": mode
+        })
+    else:
+        resp = generator.generate_lyrics(req)
+        return jsonify({
+            "lyrics": resp.lyrics,
+            "source": resp.source,
+            "model": resp.model,
+            "labels": resp.labels_used,
+            "emotion": resp.emotion,
+            "num_lines": num_lines,
+            "mode_requested": "auto"
+        })
 
 
 @app.route('/api/render', methods=['POST'])
