@@ -184,8 +184,7 @@ DoodleTunes/
 │   │   ├── Calm/
 │   │   ├── Angry/
 │   │   ├── Romantic/
-│   │   ├── Energetic/
-│   │   └── Default/        # Default fallback voice
+│   │   └── Energetic/
 │   ├── src/
 │   │   └── tts/            # TTS implementation
 │   │       ├── piper.py    # Piper TTS wrapper
