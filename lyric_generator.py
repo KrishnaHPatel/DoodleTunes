@@ -90,15 +90,15 @@ class LyricGenerator:
                 "The {label} helps us to redeem,\n"
                 "A calm and tranquil theme."
             ],
-            "mysterious": [
-                "The {label} hides in shadows deep,\n"
-                "Secrets that it wants to keep.\n"
-                "Through the darkness it will creep,\n"
-                "The {label} never seems to sleep.\n"
-                "Whispers echo in the night,\n"
-                "Hidden from the light.\n"
-                "The {label} moves beyond our sight,\n"
-                "A mystery burning bright."
+            "angry": [
+                "The {label} is angry and fierce,\n"
+                "With a look that could freeze the ice.\n"
+                "Anger fills the air so sharp,\n"
+                "The {label} makes us all feel the wrath.\n"
+                "Rage burns like a wildfire,\n"
+                "Nothing can compare.\n"
+                "The {label} shows us how to care,\n"
+                "With energy beyond compare."
             ],
             "romantic": [
                 "The {label} blooms in spring's embrace,\n"
@@ -284,7 +284,7 @@ if __name__ == "__main__":
     # Example request
     request = LyricRequest(
         labels=["cat", "moon"],
-        emotion="mysterious",
+        emotion="calm",
         num_lines=8
     )
     
