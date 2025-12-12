@@ -13,6 +13,34 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 from tts.piper import synthesize_text
 from tts.pacing import compute_pauses, get_mood_profile
 
+# Optional BEiT model imports (lazy load)
+_beit_model = None
+_beit_processor = None
+_beit_device = None
+
+def load_beit_model():
+    """Lazy load BEiT model only when needed"""
+    global _beit_model, _beit_processor, _beit_device
+    if _beit_model is None:
+        try:
+            import torch
+            from PIL import Image
+            import io
+            from transformers import BeitForImageClassification, BeitImageProcessor
+            
+            MODEL_NAME = "kmewhort/beit-sketch-classifier"
+            _beit_processor = BeitImageProcessor.from_pretrained(MODEL_NAME, use_safetensors=True)
+            _beit_model = BeitForImageClassification.from_pretrained(MODEL_NAME, use_safetensors=True)
+            _beit_device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            _beit_model.to(_beit_device)
+            _beit_model.eval()
+            print("✓ BEiT model loaded successfully")
+        except ImportError:
+            print("⚠ Warning: torch/transformers not installed. BEiT endpoint will not work.")
+            print("  Install with: pip install torch transformers pillow")
+            raise
+    return _beit_model, _beit_processor, _beit_device
+
 app = Flask(__name__, static_folder="../frontend", static_url_path="")
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -156,11 +184,69 @@ def health():
 
 @app.route("/")
 def index():
+    # Default to drawing page (page 1)
+    return send_from_directory(app.static_folder, "drawing.html")
+
+@app.route("/lyrics.html")
+def lyrics():
     return send_from_directory(app.static_folder, "index.html")
 
 @app.route("/playback.html")
 def playback():
     return send_from_directory(app.static_folder, "playback.html")
+
+@app.route("/drawing.html")
+def drawing():
+    return send_from_directory(app.static_folder, "drawing.html")
+
+@app.route("/api/predict", methods=["POST", "OPTIONS"])
+def predict():
+    """BEiT sketch classification endpoint"""
+    if request.method == "OPTIONS":
+        return jsonify({"status": "ok"}), 200
+    
+    try:
+        model, processor, device = load_beit_model()
+    except Exception as e:
+        return jsonify({"error": f"Model not available: {str(e)}"}), 503
+    
+    try:
+        from PIL import Image
+        import io
+        import torch
+        
+        data = request.get_json()
+        img_data = data.get("image")
+
+        if not img_data:
+            return jsonify({"error": "No image provided"}), 400
+
+        # Strip the data:image/png;base64, header if it exists
+        if "," in img_data:
+            img_data = img_data.split(",")[1]
+
+        # Convert base64 to PIL Image
+        try:
+            image_bytes = io.BytesIO(base64.b64decode(img_data))
+            image = Image.open(image_bytes).convert("RGB")
+        except Exception as e:
+            return jsonify({"error": f"Failed to parse image: {str(e)}"}), 400
+
+        # Preprocess and run BEiT
+        try:
+            inputs = processor(images=image, return_tensors="pt")
+            inputs = {k: v.to(device) for k, v in inputs.items()}
+            with torch.no_grad():
+                outputs = model(**inputs)
+                logits = outputs.logits
+                pred_idx = logits.argmax(-1).item()
+                label = model.config.id2label[pred_idx]
+        except Exception as e:
+            return jsonify({"error": f"Model inference failed: {str(e)}"}), 500
+
+        return jsonify({"label": label})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":
@@ -168,8 +254,13 @@ if __name__ == "__main__":
     print("🎵 DoodleTunes Unified Server starting...")
     print(f"Server running on http://localhost:{port}")
     print("Endpoints:")
+    print("  - /api/predict (POST) - BEiT sketch classification")
     print("  - /api/generate-lyrics (POST) - Generate lyrics from labels")
     print("  - /api/render (POST) - Render lyrics to speech")
+    print("Pages:")
+    print("  - / (drawing.html) - Draw images and get labels")
+    print("  - /lyrics.html (index.html) - Generate lyrics")
+    print("  - /playback.html - Play audio")
     app.run(host="0.0.0.0", port=port, debug=True)
 
 
