@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoodleTunes - Image Labeling</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎵 DoodleTunes</h1>
+            <p class="subtitle">Draw or upload 3 images to generate labels</p>
+        </header>
+
+        <div class="image-slots">
+            <div class="image-slot" data-slot="0">
+                <div class="slot-header">
+                    <h3>Image 1</h3>
+                    <div class="slot-actions">
+                        <button class="btn-draw" data-slot="0">Draw</button>
+                        <button class="btn-upload" data-slot="0">Upload</button>
+                        <input type="file" id="upload-0" accept="image/*" style="display: none;">
+                        <button class="btn-classify" data-slot="0" style="display: none;">Classify</button>
+                        <button class="btn-clear" data-slot="0" style="display: none;">Clear</button>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="canvas-0" width="300" height="300"></canvas>
+                    <div class="canvas-overlay" id="overlay-0">
+                        <p>Click "Draw" or "Upload" to add an image</p>
+                    </div>
+                </div>
+                <div class="label-container" id="label-0" style="display: none;">
+                    <p class="label-text">Label: <span id="label-text-0">-</span></p>
+                    <div class="loading" id="loading-0" style="display: none;">Processing...</div>
+                </div>
+            </div>
+
+            <div class="image-slot" data-slot="1">
+                <div class="slot-header">
+                    <h3>Image 2</h3>
+                    <div class="slot-actions">
+                        <button class="btn-draw" data-slot="1">Draw</button>
+                        <button class="btn-upload" data-slot="1">Upload</button>
+                        <input type="file" id="upload-1" accept="image/*" style="display: none;">
+                        <button class="btn-classify" data-slot="1" style="display: none;">Classify</button>
+                        <button class="btn-clear" data-slot="1" style="display: none;">Clear</button>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="canvas-1" width="300" height="300"></canvas>
+                    <div class="canvas-overlay" id="overlay-1">
+                        <p>Click "Draw" or "Upload" to add an image</p>
+                    </div>
+                </div>
+                <div class="label-container" id="label-1" style="display: none;">
+                    <p class="label-text">Label: <span id="label-text-1">-</span></p>
+                    <div class="loading" id="loading-1" style="display: none;">Processing...</div>
+                </div>
+            </div>
+
+            <div class="image-slot" data-slot="2">
+                <div class="slot-header">
+                    <h3>Image 3</h3>
+                    <div class="slot-actions">
+                        <button class="btn-draw" data-slot="2">Draw</button>
+                        <button class="btn-upload" data-slot="2">Upload</button>
+                        <input type="file" id="upload-2" accept="image/*" style="display: none;">
+                        <button class="btn-classify" data-slot="2" style="display: none;">Classify</button>
+                        <button class="btn-clear" data-slot="2" style="display: none;">Clear</button>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="canvas-2" width="300" height="300"></canvas>
+                    <div class="canvas-overlay" id="overlay-2">
+                        <p>Click "Draw" or "Upload" to add an image</p>
+                    </div>
+                </div>
+                <div class="label-container" id="label-2" style="display: none;">
+                    <p class="label-text">Label: <span id="label-text-2">-</span></p>
+                    <div class="loading" id="loading-2" style="display: none;">Processing...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review and Confirm Section -->
+        <div class="review-section" id="review-section" style="display: none;">
+            <h2>Review Your Labels</h2>
+            <p class="review-subtitle">Edit the labels if needed, then confirm to proceed</p>
+            
+            <div class="review-labels">
+                <div class="review-item">
+                    <label for="review-label-0">Label 1:</label>
+                    <input type="text" id="review-label-0" class="review-input" placeholder="Enter label...">
+                </div>
+                <div class="review-item">
+                    <label for="review-label-1">Label 2:</label>
+                    <input type="text" id="review-label-1" class="review-input" placeholder="Enter label...">
+                </div>
+                <div class="review-item">
+                    <label for="review-label-2">Label 3:</label>
+                    <input type="text" id="review-label-2" class="review-input" placeholder="Enter label...">
+                </div>
+            </div>
+            
+            <button class="btn-confirm" id="btn-confirm">Confirm Labels</button>
+        </div>
+    </div>
+
+    <script src="app.js?v=20"></script>
+</body>
+</html>
+
