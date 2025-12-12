@@ -4,9 +4,8 @@ Complete setup instructions for running DoodleTunes on a new machine.
 
 ## Prerequisites
 
-- Python 3.8 or higher
+- Python 3.8 to 3.13
 - pip (Python package manager)
-- Git
 
 ## Step 1: Clone the Repository
 
@@ -29,6 +28,9 @@ pip install -r requirements.txt
 - `flask-cors` - Cross-origin resource sharing
 - `piper-tts` - Text-to-speech synthesis
 - `requests` - HTTP library for API calls
+- `torch`, `transformers`, `Pillow` - For BEiT image recognition (~2GB total download)
+
+**Note:** If you don't need the image recognition feature, you can comment out `torch`, `transformers`, and `Pillow` in `requirements.txt` before running `pip install` to skip the large download. The rest of the app (lyric generation and playback) will still function without them.
 
 ## Step 3: Set Up Hugging Face Token (for LLM)
 
@@ -45,7 +47,7 @@ The lyric generation feature requires a Hugging Face API token.
    
    Add this line (replace `your_token_here` with your actual token):
    ```bash
-   export HF_TOKEN=your_token_here
+   export HF_TOKEN="your_token_here"
    ```
 
 3. **Reload your shell configuration:**
@@ -140,37 +142,19 @@ ls -la backend/voices/*/*.onnx.json
 
 You should see 12 files total (6 moods × 2 files each).
 
-## Step 5: Optional - Install BEiT Dependencies (for Image Recognition)
-
-The image recognition feature (Page 1) requires additional dependencies:
-
-```bash
-pip install torch transformers Pillow
-```
-
-**Note:** These are large packages (~2GB total). If you don't install them, the image recognition feature will not work, but the rest of the app (lyric generation and playback) will still function.
-
-## Step 6: Run the Server
+## Step 5: Run the Server
 
 ```bash
 cd backend
 python app.py
 ```
 
-Or with Python 3 explicitly:
-
-```bash
-cd backend
-python3 app.py
-```
-
 You should see:
 ```
-🎵 DoodleTunes Unified Server starting...
 Server running on http://localhost:8001
 ```
 
-## Step 7: Open in Browser
+## Step 6: Open in Browser
 
 Navigate to: **http://localhost:8001**
 
@@ -244,6 +228,6 @@ DoodleTunes/
 - Check your token is valid at https://huggingface.co/settings/tokens
 
 ### BEiT image recognition not working
-- Install optional dependencies: `pip install torch transformers Pillow`
+- Ensure dependencies installed: `pip install torch transformers Pillow`
 - The model downloads automatically on first use (may take a few minutes)
 - Check server logs for import errors
