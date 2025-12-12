@@ -162,6 +162,7 @@ class PlaybackApp {
       const moodProfile = this.getMoodProfile(mood);
       moodProfile.mood = mood;
 
+      this.updateStatus('Background music queuing...');
       await this.melodyPlayer.start(moodProfile, musicInput);
 
       await this.voicePlayer.play(response.chunks, voiceInput, () => {

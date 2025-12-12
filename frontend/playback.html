@@ -1,332 +1,431 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DoodleTunes - Playback</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="src/ui/style.css">
-    <style>
-      :root {
-        --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        --panel: #ffffff;
-        --text: #1b1f2a;
-        --muted: #6b7280;
-        --primary: #667eea;
-        --primary-600: #5568d3;
-        --primary-light: #e0e7ff;
-        --border: #e5e7eb;
-        --chip: #eef2ff;
-        --radius: 16px;
-        --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        --shadow-hover: 0 15px 50px rgba(0, 0, 0, 0.15);
-      }
-      * { box-sizing: border-box; }
-      body {
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        margin: 0;
-        color: var(--text);
-        background: #1a2f4a;
-        background-image: 
-          radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
-          radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-          radial-gradient(circle at 40% 20%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 90% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 10% 90%, rgba(34, 197, 94, 0.12) 0%, transparent 50%),
-          radial-gradient(circle at 60% 60%, rgba(59, 130, 246, 0.12) 0%, transparent 50%);
-        min-height: 100vh;
-        padding: 20px 0;
-        position: relative;
-      }
-      
-      body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: 
-          repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 100px,
-            rgba(59, 130, 246, 0.03) 100px,
-            rgba(59, 130, 246, 0.03) 102px
-          ),
-          repeating-linear-gradient(
-            -45deg,
-            transparent,
-            transparent 100px,
-            rgba(34, 197, 94, 0.03) 100px,
-            rgba(34, 197, 94, 0.03) 102px
-          );
-        pointer-events: none;
-        z-index: 0;
-      }
-      
-      .app {
-        position: relative;
-        z-index: 1;
-      }
-      .app {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 40px 24px;
-        position: relative;
-        z-index: 1;
-      }
-      .hero {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        margin-bottom: 16px;
-        position: relative;
-      }
-      
-      .hero a {
-        position: absolute;
-        left: 0;
-      }
-      h1 {
-        margin: 0;
-        font-size: 44px;
-        font-weight: 700;
-        font-family: 'Caveat', cursive;
-        color: #ffffff;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        letter-spacing: 1px;
-      }
-      .row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
-      label { font-size: 13px; color: #374151; display: inline-block; margin-bottom: 6px; }
-      input, select, button { padding: 10px 12px; font-size: 14px; }
-      input, select {
-        border: 2px solid var(--border);
-        border-radius: 12px;
-        background: #fff;
-        width: 100%;
-        transition: all 0.2s ease;
-      }
-      
-      input:focus, select:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-      }
-      
-      input[type="range"] {
-        -webkit-appearance: none;
-        appearance: none;
-        height: 6px;
-        background: #e5e7eb;
-        border-radius: 3px;
-        outline: none;
-        border: none;
-      }
-      
-      input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 18px;
-        height: 18px;
-        background: var(--primary);
-        border-radius: 50%;
-        cursor: pointer;
-        box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
-        transition: all 0.2s ease;
-      }
-      
-      input[type="range"]::-webkit-slider-thumb:hover {
-        transform: scale(1.2);
-        box-shadow: 0 3px 8px rgba(102, 126, 234, 0.5);
-      }
-      
-      input[type="range"]::-moz-range-thumb {
-        width: 18px;
-        height: 18px;
-        background: var(--primary);
-        border-radius: 50%;
-        cursor: pointer;
-        border: none;
-        box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
-      }
-      .select { position: relative; }
-      .select select {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        padding-right: 36px;
-        background-color: #fff;
-      }
-      .select:after {
-        content: "";
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        width: 0;
-        height: 0;
-        border-left: 6px solid transparent;
-        border-right: 6px solid transparent;
-        border-top: 6px solid var(--muted);
-        transform: translateY(-25%);
-        pointer-events: none;
-      }
-      button {
-        border: 0;
-        background: var(--primary);
-        color: #fff;
-        border-radius: 12px;
-        cursor: pointer;
-        padding: 12px 24px;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        font-weight: 600;
-        font-size: 14px;
-        transition: all 0.2s ease;
-      }
-      button:hover { 
-        background: var(--primary-600);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-      }
-      button:active {
-        transform: translateY(0);
-      }
-      button[disabled] { 
-        opacity: 0.7; 
-        cursor: not-allowed;
-        transform: none !important;
-      }
-      .btn-outline {
-        background: #fff;
-        color: var(--primary);
-        border: 2px solid var(--primary);
-        box-shadow: none;
-        font-weight: 600;
-      }
-      .btn-outline:hover { 
-        background: var(--primary-light);
-        border-color: var(--primary-600);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-      }
-      .card {
-        border: none;
-        border-radius: var(--radius);
-        padding: 28px;
-        background: var(--panel);
-        box-shadow: var(--shadow);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-      
-      .card:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-hover);
-      }
-      .grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
-      .status { font-size: 13px; color: var(--muted); min-height: 18px; }
-      textarea {
-        width: 100%;
-        border: 2px solid var(--border);
-        border-radius: 12px;
-        padding: 20px;
-        font-size: 16px;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        line-height: 1.8;
-        resize: vertical;
-        background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
-        color: #2d3748;
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-        transition: all 0.2s ease;
-        font-weight: 400;
-      }
-      
-      #mood-select {
-        background-color: #f3f4f6;
-        cursor: not-allowed;
-        opacity: 0.7;
-      }
-      
-      #mood-select:disabled {
-        background-color: #f3f4f6;
-      }
-      
-      textarea:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 0 0 3px rgba(102, 126, 234, 0.1);
-      }
-      
-      label {
-        font-weight: 600;
-        color: #374151;
-      }
-      
-      .status {
-        font-weight: 500;
-        color: var(--muted);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="app">
-      <div class="hero">
-        <h1>DoodleTunes</h1>
-        <a href="index.html" class="btn-outline" style="text-decoration: none; color: var(--primary);">← Back</a>
-      </div>
 
-      <!-- Playback Panel -->
-      <div class="card grid">
-        <div class="row">
-          <div style="flex:1; min-width: 200px;">
-            <label for="mood-select">Mood</label><br>
-            <div class="select">
-              <select id="mood-select">
-                <option value="Calm">Calm</option>
-                <option value="Sad">Sad</option>
-                <option value="Romantic">Romantic</option>
-                <option value="Happy" selected>Happy</option>
-                <option value="Energetic">Energetic</option>
-                <option value="Angry">Angry</option>
-              </select>
-            </div>
-          </div>
-          <div style="flex:2; min-width: 260px;">
-            <label>Volume</label><br>
-            <div class="row" style="gap:18px;">
-              <label style="flex:1;">
-                Voice:
-                <input type="range" id="voice-volume" min="0" max="100" value="80" style="width:100%">
-                <span id="voice-volume-value">80%</span>
-              </label>
-              <label style="flex:1;">
-                Music:
-                <input type="range" id="music-volume" min="0" max="100" value="60" style="width:100%">
-                <span id="music-volume-value">60%</span>
-              </label>
-            </div>
-          </div>
-          <div style="align-self: end;">
-            <button id="play-btn" class="btn-outline">Play</button>
-            <button id="stop-btn" class="btn-outline" disabled>Stop</button>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DoodleTunes - Playback</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="src/ui/style.css">
+  <style>
+    :root {
+      --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --panel: #ffffff;
+      --text: #1b1f2a;
+      --muted: #6b7280;
+      --primary: #667eea;
+      --primary-600: #5568d3;
+      --primary-light: #e0e7ff;
+      --border: #e5e7eb;
+      --chip: #eef2ff;
+      --radius: 16px;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 0 15px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0;
+      color: var(--text);
+      background: #1a2f4a;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 90% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 10% 90%, rgba(34, 197, 94, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 60% 60%, rgba(59, 130, 246, 0.12) 0%, transparent 50%);
+      min-height: 100vh;
+      padding: 20px 0;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        repeating-linear-gradient(45deg,
+          transparent,
+          transparent 100px,
+          rgba(59, 130, 246, 0.03) 100px,
+          rgba(59, 130, 246, 0.03) 102px),
+        repeating-linear-gradient(-45deg,
+          transparent,
+          transparent 100px,
+          rgba(34, 197, 94, 0.03) 100px,
+          rgba(34, 197, 94, 0.03) 102px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+    }
+
+    .app {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .back-button {
+      position: absolute;
+      left: 0;
+      top: 0;
+      text-decoration: none;
+      color: var(--primary);
+      background: white;
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .back-button:hover {
+      background: var(--primary-light);
+      transform: translateY(-1px);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 44px;
+      font-weight: 700;
+      font-family: 'Caveat', cursive;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      letter-spacing: 1px;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+
+    label {
+      font-size: 13px;
+      color: #374151;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select,
+    button {
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+
+    input,
+    select {
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      width: 100%;
+      transition: all 0.2s ease;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      background: #e5e7eb;
+      border-radius: 3px;
+      outline: none;
+      border: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+      box-shadow: 0 3px 8px rgba(102, 126, 234, 0.5);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+    }
+
+    .select {
+      position: relative;
+    }
+
+    .select select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      padding-right: 36px;
+      background-color: #fff;
+    }
+
+    .select:after {
+      content: "";
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid var(--muted);
+      transform: translateY(-25%);
+      pointer-events: none;
+    }
+
+    button {
+      border: 0;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 12px;
+      cursor: pointer;
+      padding: 12px 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background: var(--primary-600);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button[disabled] {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      box-shadow: none;
+      font-weight: 600;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary-light);
+      border-color: var(--primary-600);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .card {
+      border: none;
+      border-radius: var(--radius);
+      padding: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1fr;
+    }
+
+    .status {
+      font-size: 13px;
+      color: var(--muted);
+      min-height: 18px;
+    }
+
+    textarea {
+      width: 100%;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      font-size: 16px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.8;
+      resize: vertical;
+      background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+      color: #2d3748;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+      font-weight: 400;
+    }
+
+    #mood-select {
+      background-color: #f3f4f6;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    #mood-select:disabled {
+      background-color: #f3f4f6;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    label {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .status {
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .restart-btn {
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .restart-btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+    }
+
+    .restart-btn:active {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="hero">
+      <a href="index.html" class="back-button">← Back</a>
+      <h1>DoodleTunes</h1>
+    </div>
+
+    <!-- Playback Panel -->
+    <div class="card grid">
+      <div class="row" style="align-items: flex-end;">
+        <div style="flex:1; min-width: 260px;">
+          <label for="mood-select">Mood</label><br>
+          <div class="select">
+            <select id="mood-select">
+              <option value="Calm">Calm</option>
+              <option value="Sad">Sad</option>
+              <option value="Romantic">Romantic</option>
+              <option value="Happy" selected>Happy</option>
+              <option value="Energetic">Energetic</option>
+              <option value="Angry">Angry</option>
+            </select>
           </div>
         </div>
-        <div class="grid">
-          <div>
-            <label for="lyrics-input">Lyrics</label>
-            <textarea id="lyrics-input" rows="8" readonly></textarea>
+        <div style="flex:2; min-width: 260px;">
+          <label>Volume</label><br>
+          <div class="row" style="gap:12px; margin-top: 12px;">
+            <label style="flex:1;">
+              Voice:
+              <input type="range" id="voice-volume" min="0" max="100" value="80" style="width:100%">
+              <span id="voice-volume-value">80%</span>
+            </label>
+            <label style="flex:1;">
+              Music:
+              <input type="range" id="music-volume" min="0" max="100" value="60" style="width:100%">
+              <span id="music-volume-value">60%</span>
+            </label>
           </div>
-          <div class="status" id="status">Ready</div>
         </div>
+      </div>
+      <div style="display: flex; gap: 8px; justify-content: center; margin-top: 16px;">
+        <button id="play-btn" class="btn-outline">Play</button>
+        <button id="stop-btn" class="btn-outline" disabled>Stop</button>
+      </div>
+      <p style="margin: 12px 0 0; color: var(--muted); font-size: 13px; text-align: center;">Click "Play" to hear your
+        tune. Adjust the voice and music volume as needed</p>
+      <div class="grid">
+        <div>
+          <label for="lyrics-input">Lyrics</label>
+          <textarea id="lyrics-input" rows="8" readonly></textarea>
+        </div>
+        <div class="status" id="status">Ready</div>
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.js"></script>
-    <script type="module" src="src/playback.js"></script>
-  </body>
-</html>
+    <div style="text-align: center; margin-top: 32px;">
+      <a href="/" class="restart-btn">Restart</a>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.js"></script>
+  <script type="module" src="src/playback.js"></script>
+</body>
 
+</html>

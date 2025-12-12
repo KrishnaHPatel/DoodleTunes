@@ -79,6 +79,29 @@
       .hero {
         text-align: center;
         margin-bottom: 40px;
+        position: relative;
+      }
+      
+      .back-button {
+        position: absolute;
+        left: 0;
+        top: 0;
+        text-decoration: none;
+        color: var(--primary);
+        background: white;
+        border: 2px solid var(--primary);
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+      }
+      
+      .back-button:hover {
+        background: var(--primary-light);
+        transform: translateY(-1px);
       }
       
       h1 {
@@ -315,8 +338,9 @@
 <body>
     <div class="app">
         <div class="hero">
+            <a href="/" class="back-button">← Back</a>
             <h1>DoodleTunes</h1>
-            <p class="subtitle">Draw or upload up to 3 images to generate labels</p>
+            <p class="subtitle">Sketch or upload 3 images to generate labels</p>
         </div>
 
         <div class="image-slots">
@@ -324,7 +348,7 @@
                 <div class="slot-header">
                     <h3>Image 1</h3>
                     <div class="slot-actions">
-                        <button class="btn-draw" data-slot="0">Draw</button>
+                        <button class="btn-draw" data-slot="0">Sketch</button>
                         <button class="btn-upload" data-slot="0">Upload</button>
                         <input type="file" id="upload-0" accept="image/*" style="display: none;">
                         <button class="btn-clear" data-slot="0" style="display: none;">Clear</button>
@@ -333,7 +357,7 @@
                 <div class="canvas-container">
                     <canvas id="canvas-0" width="300" height="300"></canvas>
                     <div class="canvas-overlay" id="overlay-0">
-                        <p>Click "Draw" or "Upload" to add an image</p>
+                        <p>Click "Sketch" to draw, or "Upload" to add an image from your computer</p>
                     </div>
                 </div>
                 <div class="label-container" id="label-0" style="display: none;">
@@ -346,7 +370,7 @@
                 <div class="slot-header">
                     <h3>Image 2</h3>
                     <div class="slot-actions">
-                        <button class="btn-draw" data-slot="1">Draw</button>
+                        <button class="btn-draw" data-slot="1">Sketch</button>
                         <button class="btn-upload" data-slot="1">Upload</button>
                         <input type="file" id="upload-1" accept="image/*" style="display: none;">
                         <button class="btn-clear" data-slot="1" style="display: none;">Clear</button>
@@ -355,7 +379,7 @@
                 <div class="canvas-container">
                     <canvas id="canvas-1" width="300" height="300"></canvas>
                     <div class="canvas-overlay" id="overlay-1">
-                        <p>Click "Draw" or "Upload" to add an image</p>
+                        <p>Click "Sketch" to draw, or "Upload" to add an image from your computer</p>
                     </div>
                 </div>
                 <div class="label-container" id="label-1" style="display: none;">
@@ -368,7 +392,7 @@
                 <div class="slot-header">
                     <h3>Image 3</h3>
                     <div class="slot-actions">
-                        <button class="btn-draw" data-slot="2">Draw</button>
+                        <button class="btn-draw" data-slot="2">Sketch</button>
                         <button class="btn-upload" data-slot="2">Upload</button>
                         <input type="file" id="upload-2" accept="image/*" style="display: none;">
                         <button class="btn-clear" data-slot="2" style="display: none;">Clear</button>
@@ -377,7 +401,7 @@
                 <div class="canvas-container">
                     <canvas id="canvas-2" width="300" height="300"></canvas>
                     <div class="canvas-overlay" id="overlay-2">
-                        <p>Click "Draw" or "Upload" to add an image</p>
+                        <p>Click "Sketch" to draw, or "Upload" to add an image from your computer</p>
                     </div>
                 </div>
                 <div class="label-container" id="label-2" style="display: none;">
@@ -390,7 +414,7 @@
         <!-- Review and Confirm Section -->
         <div class="review-section" id="review-section" style="display: none;">
             <h2>Review Your Labels</h2>
-            <p class="review-subtitle">Edit the labels if needed, then proceed to generate lyrics</p>
+            <p class="review-subtitle">Edit the labels if needed, then click "Next" to generate lyrics.</p>
             
             <div class="review-labels">
                 <div class="review-item">

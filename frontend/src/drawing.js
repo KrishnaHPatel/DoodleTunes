@@ -279,6 +279,15 @@ async function generateLabel(slotIndex) {
         }
 
         const result = await response.json();
+        
+        // Check if there's an error in the response
+        if (result.error) {
+            console.error("BEiT API error:", result.error);
+            labelText.textContent = "error";
+            updateReviewSection(slotIndex, "error");
+            return;
+        }
+        
         const label = result.label || "unknown";
         labelText.textContent = label;
         

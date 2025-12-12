@@ -56,8 +56,15 @@
     // Render meta as chips
     const chips = [];
     if (Array.isArray(data.labels)) chips.push(`<span class="chip">Labels: ${data.labels.join(", ")}</span>`);
-    if (data.emotion) chips.push(`<span class="chip">Mood: ${data.emotion}</span>`);
-    if (data.source) chips.push(`<span class="chip">Source: ${data.source}</span>`);
+    if (data.emotion) {
+      // Capitalize first letter of mood
+      const moodDisplay = data.emotion.charAt(0).toUpperCase() + data.emotion.slice(1).toLowerCase();
+      chips.push(`<span class="chip">Mood: ${moodDisplay}</span>`);
+    }
+    if (data.source) {
+      const sourceDisplay = data.source.toLowerCase() === 'llm' ? 'LLM' : data.source;
+      chips.push(`<span class="chip">Source: ${sourceDisplay}</span>`);
+    }
     if (data.model) chips.push(`<span class="chip">Model: ${data.model}</span>`);
     metaEl.innerHTML = chips.join("");
 
@@ -77,7 +84,7 @@
   generateBtn.addEventListener("click", () => {
     const req = {
       labels: parseLabels(labelsEl.value),
-      emotion: (emotionEl.value || "happy").trim(),
+      emotion: (emotionEl.value || "calm").trim(),
       num_lines: 8,
     };
     lastRequest = req;
@@ -127,27 +134,20 @@
       }
     }
     
-    if (savedMood && emotionEl) {
-      emotionEl.value = savedMood;
+    // Don't load saved mood - always default to "calm"
+    if (emotionEl) {
+      emotionEl.value = "calm";
     }
   });
 
-  // Check if there's already lyrics (in case user navigated back)
-  const stored = localStorage.getItem('doodletunes_lyrics');
-  if (stored) {
-    try {
-      const lyricsData = JSON.parse(stored);
-      // If lyrics exist, show them and enable Next button
-      if (lyricsData.lyrics) {
-        lyricsEl.textContent = lyricsData.lyrics;
-        resultEl.style.display = "block";
-        if (nextBtn) {
-          nextBtn.style.display = "inline-flex";
-        }
-      }
-    } catch (e) {
-      console.error("Failed to parse stored lyrics", e);
-    }
+  // Clear any stored lyrics when page loads (so lyrics don't show on entry)
+  // Lyrics should only appear after clicking Generate
+  localStorage.removeItem('doodletunes_lyrics');
+  
+  // Ensure result panel is hidden on page load
+  resultEl.style.display = "none";
+  if (nextBtn) {
+    nextBtn.style.display = "none";
   }
   
   // Load labels on page load (mood is selected on this page, not from page 1)
