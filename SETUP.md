@@ -30,7 +30,7 @@ pip install -r requirements.txt
 - `requests` - HTTP library for API calls
 - `torch`, `transformers`, `Pillow` - For BEiT image recognition (~2GB total download)
 
-**Important:** `numpy` must be below version 2.0 for compatibility. If you encounter numpy-related errors, install a compatible version:
+**Note:** `numpy` must be below version 2.0 for compatibility. If you encounter numpy-related errors, install a compatible version:
 ```bash
 pip install "numpy<2.0"
 ```
@@ -236,3 +236,9 @@ DoodleTunes/
 - Ensure dependencies installed: `pip install torch transformers Pillow`
 - The model downloads automatically on first use (may take a few minutes)
 - Check server logs for import errors
+- **If having trouble loading the model**, you can modify `backend/app.py` in the `load_beit_model()` function to add `use_auth_token=False`:
+  ```python
+  processor = BeitImageProcessor.from_pretrained(MODEL_NAME, use_safetensors=True, use_auth_token=False)
+  model = BeitForImageClassification.from_pretrained(MODEL_NAME, use_safetensors=True, use_auth_token=False)
+  ```
+  Make sure `use_auth_token=False` is set in both calls.
