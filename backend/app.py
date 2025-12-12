@@ -158,6 +158,10 @@ def health():
 def index():
     return send_from_directory(app.static_folder, "index.html")
 
+@app.route("/playback.html")
+def playback():
+    return send_from_directory(app.static_folder, "playback.html")
+
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", "8001"))

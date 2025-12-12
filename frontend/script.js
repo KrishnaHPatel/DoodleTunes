@@ -10,9 +10,11 @@
   const metaEl = document.getElementById("meta");
   const thumbUpBtn = document.getElementById("thumbUp");
   const thumbDownBtn = document.getElementById("thumbDown");
+  const nextBtn = document.getElementById("next-btn");
 
   let lastRequest = null;
   let isLoading = false;
+  let likedLyrics = null;
 
   function setLoading(loading, msg = "") {
     isLoading = loading;
@@ -50,15 +52,8 @@
     resultEl.style.display = "block";
     lyricsEl.textContent = data.lyrics || "(no lyrics returned)";
     lyricsEl.classList.remove("fade-in");
-    // trigger reflow to restart animation
     void lyricsEl.offsetWidth;
     lyricsEl.classList.add("fade-in");
-
-    // Also sync to playback textarea if present
-    const playbackTextarea = document.getElementById("lyrics-input");
-    if (playbackTextarea) {
-      playbackTextarea.value = data.lyrics || "";
-    }
 
     // Render meta as chips
     const chips = [];
@@ -67,6 +62,10 @@
     if (data.source) chips.push(`<span class="chip">Source: ${data.source}</span>`);
     if (data.model) chips.push(`<span class="chip">Model: ${data.model}</span>`);
     metaEl.innerHTML = chips.join("");
+
+    // Reset like state
+    likedLyrics = null;
+    nextBtn.classList.remove("show");
   }
 
   function parseLabels(str) {
@@ -87,8 +86,24 @@
   });
 
   thumbUpBtn.addEventListener("click", () => {
-    // For now, just acknowledge. Could be extended to save feedback.
-    statusEl.textContent = "Thanks for the feedback! (👍)";
+    if (!lyricsEl.textContent || lyricsEl.textContent === "(no lyrics returned)") {
+      return;
+    }
+    
+    // Store liked lyrics data
+    likedLyrics = {
+      lyrics: lyricsEl.textContent,
+      labels: lastRequest ? lastRequest.labels : [],
+      emotion: lastRequest ? lastRequest.emotion : emotionEl.value,
+      meta: metaEl.innerHTML
+    };
+    
+    // Store in localStorage for next page
+    localStorage.setItem('doodletunes_lyrics', JSON.stringify(likedLyrics));
+    
+    // Show Next button
+    nextBtn.classList.add("show");
+    statusEl.textContent = "Lyrics saved! Click Next to continue.";
   });
 
   thumbDownBtn.addEventListener("click", () => {
@@ -96,6 +111,21 @@
     statusEl.textContent = "Regenerating...";
     callGenerate(lastRequest);
   });
-})(); 
 
+  nextBtn.addEventListener("click", () => {
+    if (likedLyrics) {
+      window.location.href = "playback.html";
+    }
+  });
 
+  // Check if there's already liked lyrics (in case user navigated back)
+  const stored = localStorage.getItem('doodletunes_lyrics');
+  if (stored) {
+    try {
+      likedLyrics = JSON.parse(stored);
+      nextBtn.classList.add("show");
+    } catch (e) {
+      console.error("Failed to parse stored lyrics", e);
+    }
+  }
+})();
