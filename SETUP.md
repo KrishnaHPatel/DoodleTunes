@@ -30,6 +30,11 @@ pip install -r requirements.txt
 - `requests` - HTTP library for API calls
 - `torch`, `transformers`, `Pillow` - For BEiT image recognition (~2GB total download)
 
+**Important:** `numpy` must be below version 2.0 for compatibility. If you encounter numpy-related errors, install a compatible version:
+```bash
+pip install "numpy<2.0"
+```
+
 **Note:** If you don't need the image recognition feature, you can comment out `torch`, `transformers`, and `Pillow` in `requirements.txt` before running `pip install` to skip the large download. The rest of the app (lyric generation and playback) will still function without them.
 
 ## Step 3: Set Up Hugging Face Token (for LLM)
