@@ -406,10 +406,10 @@
 
     <!-- Playback Panel -->
     <div class="card grid">
-      <div class="row" style="align-items: flex-end;">
+      <div class="row" style="align-items: flex-start;">
         <div style="flex:1; min-width: 260px;">
           <label for="mood-select">Mood</label><br>
-          <div class="select">
+          <div class="select" style="margin-top: 0;">
             <select id="mood-select">
               <option value="Calm">Calm</option>
               <option value="Sad">Sad</option>
@@ -422,7 +422,7 @@
         </div>
         <div style="flex:2; min-width: 260px;">
           <label>Volume</label><br>
-          <div class="row" style="gap:12px; margin-top: 12px;">
+          <div class="row" style="gap:12px; margin-top: 0;">
             <label style="flex:1;">
               Voice:
               <input type="range" id="voice-volume" min="0" max="100" value="80" style="width:100%">
