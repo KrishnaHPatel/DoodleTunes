@@ -36,14 +36,28 @@ class PlaybackApp {
           lyricsInput.value = data.lyrics;
         }
         
-        // Set mood if available
+        // Set mood if available and disable the selector
         const moodSelect = document.getElementById('mood-select');
         if (moodSelect && data.emotion) {
-          // Map emotion to mood (capitalize first letter)
-          const mood = data.emotion.charAt(0).toUpperCase() + data.emotion.slice(1);
+          // Map emotion from first page to mood format for second page
+          const emotionToMood = {
+            'happy': 'Happy',
+            'sad': 'Sad',
+            'calm': 'Calm',
+            'angry': 'Angry',
+            'energetic': 'Energetic',
+            'romantic': 'Romantic'
+          };
+          
+          const mood = emotionToMood[data.emotion.toLowerCase()] || 
+                       data.emotion.charAt(0).toUpperCase() + data.emotion.slice(1);
+          
           if (moodSelect.querySelector(`option[value="${mood}"]`)) {
             moodSelect.value = mood;
           }
+          
+          // Disable the mood selector
+          moodSelect.disabled = true;
         }
       } catch (e) {
         console.error("Failed to load lyrics from storage", e);
