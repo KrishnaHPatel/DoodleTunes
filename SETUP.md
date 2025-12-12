@@ -150,23 +150,7 @@ pip install torch transformers Pillow
 
 **Note:** These are large packages (~2GB total). If you don't install them, the image recognition feature will not work, but the rest of the app (lyric generation and playback) will still function.
 
-## Step 6: Optional - Download Custom Melody Files
-
-If you have custom melody WAV files, place them in:
-
-```
-frontend/melodies/
-├── Happy_Melody.wav
-├── Sad_Melody.wav
-├── Calm_Melody.wav
-├── Angry_Melody.wav
-├── Romantic_Melody.wav
-└── Energetic_Melody.wav
-```
-
-**Note:** If melody files are not present, the app will automatically generate melodies using Tone.js.
-
-## Step 7: Run the Server
+## Step 6: Run the Server
 
 ```bash
 cd backend
@@ -186,54 +170,11 @@ You should see:
 Server running on http://localhost:8001
 ```
 
-## Step 8: Open in Browser
+## Step 7: Open in Browser
 
 Navigate to: **http://localhost:8001**
 
 The app will load the intro page, and you can start using DoodleTunes!
-
----
-
-## Troubleshooting
-
-### "Voice files not found" error
-- Make sure you downloaded all voice files to `backend/voices/<Mood>/`
-- Each mood folder should contain both `.onnx` and `.onnx.json` files
-- Check file names match exactly (case-sensitive)
-
-### "401 Unauthorized" or lyrics using templates
-- Make sure `HF_TOKEN` is set in your environment
-- Restart the Flask server after setting the token
-- Verify with: `echo $HF_TOKEN`
-- Check your token is valid at https://huggingface.co/settings/tokens
-
-### BEiT image recognition not working
-- Install optional dependencies: `pip install torch transformers Pillow`
-- The model downloads automatically on first use (may take a few minutes)
-- Check server logs for import errors
-
-### Port already in use
-- Change the port: `export PORT=8002` (or any available port)
-- Or kill the process using port 8001
-
-### "Module not found" errors
-- Make sure you're in the correct Python environment
-- Try: `pip install -r backend/requirements.txt` again
-- Check that you're using the same Python version that has the packages installed
-
----
-
-## Quick Setup Checklist
-
-- [ ] Cloned the repository
-- [ ] Installed Python dependencies (`pip install -r backend/requirements.txt`)
-- [ ] Set `HF_TOKEN` in `~/.zshrc` and reloaded shell
-- [ ] Installed `piper-tts` package
-- [ ] Downloaded all 6 voice model files to `backend/voices/`
-- [ ] (Optional) Installed `torch transformers Pillow` for image recognition
-- [ ] (Optional) Added custom melody files to `frontend/melodies/`
-- [ ] Started the server with `python backend/app.py`
-- [ ] Opened http://localhost:8001 in browser
 
 ---
 
@@ -267,7 +208,7 @@ DoodleTunes/
 │   ├── drawing.html       # Page 1: Image recognition
 │   ├── index.html         # Page 2: Lyric generation
 │   ├── playback.html      # Page 3: Audio playback
-│   ├── melodies/          # Custom melody files (optional)
+│   ├── melodies/          # melody files
 │   └── src/               # Frontend JavaScript
 └── SETUP.md               # This file
 ```
@@ -286,3 +227,23 @@ DoodleTunes/
 - `/drawing.html` - Drawing/upload page
 - `/lyrics.html` - Lyric generation page
 - `/playback.html` - Audio playback page
+
+---
+
+## Troubleshooting
+
+### "Voice files not found" error
+- Make sure you downloaded all voice files to `backend/voices/<Mood>/`
+- Each mood folder should contain both `.onnx` and `.onnx.json` files
+- Check file names match exactly (case-sensitive)
+
+### "401 Unauthorized" or lyrics using templates
+- Make sure `HF_TOKEN` is set in your environment
+- Restart the Flask server after setting the token
+- Verify with: `echo $HF_TOKEN`
+- Check your token is valid at https://huggingface.co/settings/tokens
+
+### BEiT image recognition not working
+- Install optional dependencies: `pip install torch transformers Pillow`
+- The model downloads automatically on first use (may take a few minutes)
+- Check server logs for import errors
