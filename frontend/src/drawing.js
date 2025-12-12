@@ -392,7 +392,7 @@ function confirmLabels() {
     localStorage.setItem('doodletunes_labels', JSON.stringify(labels));
     
     // Navigate to lyrics generation page
-    window.location.href = "index.html";
+    window.location.href = "lyrics.html";
 }
 
 // -------------------- INIT --------------------

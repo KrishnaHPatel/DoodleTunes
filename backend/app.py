@@ -213,7 +213,7 @@ def drawing():
 
 @app.route("/lyrics.html")
 def lyrics():
-    return send_from_directory(app.static_folder, "index.html")
+    return send_from_directory(app.static_folder, "lyrics.html")
 
 @app.route("/playback.html")
 def playback():
@@ -295,8 +295,8 @@ if __name__ == "__main__":
     print("  - /api/generate-lyrics (POST) - Generate lyrics from labels")
     print("  - /api/render (POST) - Render lyrics to speech")
     print("Pages:")
-    print("  - / (drawing.html) - Draw images and get labels")
-    print("  - /lyrics.html (index.html) - Generate lyrics")
+    print("  - /drawing.html - Draw images and get labels")
+    print("  - /lyrics.html - Generate lyrics")
     print("  - /playback.html - Play audio")
     app.run(host="0.0.0.0", port=port, debug=True)
 

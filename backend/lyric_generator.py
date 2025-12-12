@@ -194,60 +194,46 @@ class LyricGenerator:
         """Create a well-crafted prompt for lyric generation"""
         labels_str = ", ".join(request.labels)
         
-        prompt = f"""You are a writer for a new pop group based in the United States. 
-        You are trying to generate lyrics for a Billboard Top 100 Hit song. Base off the lyrics 
-        on popular songs from the 2010s and 2020s
-        Write a short song verse with exactly {request.num_lines} lines about {labels_str}.
+        prompt = f"""
+        Write a short poem verse with exactly {request.num_lines} lines about {labels_str}.
 Requirements:
 - Make it easy to sing, easy to understand, and easy to remember
+- change up the structure of the poem, use longer sentences and shorter sentences
 - Use simple vocabulary and grammar and avoid end rhymes
 - Reference the objects ({labels_str}) naturally
 - Match the {request.emotion} mood
-example song #1: Blank Space - Taylor Swift: So it's gonna be forever
-Or it's gonna go down in flames?
-You can tell me when it's over, mm
-If the high was worth the pain
-Got a long list of ex-lovers
-They'll tell you I'm insane
-'Cause you know I love the players
-And you love the game
-'Cause we're young and we're reckless (Oh)
-We'll take this way too far
-It'll leave you breathless (Oh-oh), mm
-Or with a nasty scar
-Got a long list of ex-lovers
-They'll tell you I'm insane (Insane)
-But I've got a blank space, baby
-And I'll write your name
-example song #2: summertime sadness - Lana Del Rey: 
-Kiss me hard before you go
-Summertime sadness
-I just wanted you to know
-That, baby, you the best
-I got my red dress on tonight
-Dancin' in the dark, in the pale moonlight
-Done my hair up real big, beauty queen style
-High heels off, I'm feelin' alive
-Oh my God, I feel it in the air
-Telephone wires above are sizzlin' like a snare
-Honey, I'm on fire, I feel it everywhere
-Nothin' scares me anymore
-example song #3: I'm gonna swing
-From the chandelier, from the chandelier
-I'm gonna live
-Like tomorrow doesn't exist, like it doesn't exist
-I'm gonna fly
-Like a bird through the night, feel my tears as they dry
-I'm gonna swing
-From the chandelier, from the chandelier
-But I'm holdin' on for dear life
-Won't look down, won't open my eyes
-Keep my glass full until mornin' light
-'Cause I'm just holdin' on for tonight
-Help me, I'm holdin' on for dear life
-Won't look down, won't open my eyes
-Keep my glass full until mornin' light
-'Cause I'm just holdin' on for tonight, on for tonight
+example poem: The Road Not Taken - Robert Frost: 
+Two roads diverged in a yellow wood,
+And sorry I could not travel both
+And be one traveler, long I stood
+And looked down one as far as I could
+To where it bent in the undergrowth;
+
+Then took the other, as just as fair,
+And having perhaps the better claim,
+Because it was grassy and wanted wear;
+Though as for that the passing there
+Had worn them really about the same,
+
+And both that morning equally lay
+In leaves no step had trodden black.
+Oh, I kept the first for another day!
+Yet knowing how way leads on to way,
+I doubted if I should ever come back.
+
+I shall be telling this with a sigh
+Somewhere ages and ages hence:
+Two roads diverged in a wood, and I—
+I took the one less traveled by,
+And that has made all the difference.
+
+example poem 2: Walking Like a Robin - Bernadette Mayer:
+take 3 or 4 steps then stop
+look smell taste touch & hear
+is there anything to eat?
+oh look, there’s some caviar
+it must be my birthday, thanks
+i must be very old, like seventy…
 
 Write ONLY the lyrics, don't include any other text,one line per line, no numbering or labels:"""
         
