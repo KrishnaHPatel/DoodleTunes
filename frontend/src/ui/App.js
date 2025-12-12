@@ -58,7 +58,7 @@ export class App {
     try {
       this.isPlaying = true;
       this.updateStatus('Rendering voice...');
-      
+
       // Get lyrics and mood (voice is automatically selected based on mood)
       const lyricsText = document.getElementById('lyrics-input').value;
       const lyricsLines = lyricsText.split('\n').filter(line => line.trim());
@@ -77,30 +77,51 @@ export class App {
       this.currentChunks = response.chunks;
 
       this.updateStatus('Starting playback...');
-      
-      // Start Tone.js first (creates audio context)
+
+      // Start Tone.js first (creates audio context) - this must happen from user gesture
       await Tone.start();
-      
+
       // Get the native AudioContext from Tone
       // Tone.context has a 'rawContext' property in newer versions
       const toneContext = Tone.context;
-      const audioContext = toneContext.rawContext || 
-                          toneContext._context || 
-                          (toneContext instanceof AudioContext ? toneContext : new (window.AudioContext || window.webkitAudioContext)());
-      
+      let audioContext = toneContext.rawContext ||
+        toneContext._context ||
+        (toneContext instanceof (window.AudioContext || window.webkitAudioContext) ? toneContext : null);
+
+      // If we couldn't get it from Tone, create our own
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!audioContext || !(audioContext instanceof AudioContextClass)) {
+        audioContext = new AudioContextClass();
+      }
+
+      // Ensure audio context is running - critical for first play
       if (audioContext.state === 'suspended') {
         await audioContext.resume();
+      }
+
+      // Wait for context to actually be running
+      let attempts = 0;
+      while (audioContext.state !== 'running' && attempts < 50) {
+        await new Promise(resolve => setTimeout(resolve, 10));
+        if (audioContext.state === 'suspended') {
+          await audioContext.resume();
+        }
+        attempts++;
+      }
+
+      if (audioContext.state !== 'running') {
+        throw new Error('Audio context failed to start. Please try again.');
       }
 
       // Setup mixer with native AudioContext
       if (!this.mixer.audioContext) {
         this.mixer.init(audioContext);
       }
-      
+
       // Verify mixer is ready
       const voiceInput = this.mixer.getVoiceInput();
       const musicInput = this.mixer.getMusicInput();
-      
+
       if (!voiceInput || !musicInput) {
         throw new Error('Mixer not properly initialized');
       }

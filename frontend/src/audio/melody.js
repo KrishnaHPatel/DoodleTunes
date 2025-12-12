@@ -12,6 +12,7 @@ export class MelodyPlayer {
     this.audioSource = null;
     this.audioBuffer = null;
     this.gainNode = null;
+    this.audioContext = null;
   }
 
   async start(moodProfile, destination) {
@@ -101,8 +102,14 @@ export class MelodyPlayer {
   async loadCustomMelody(mood, destination) {
     // Try to load custom melody file (WAV first, then M4A)
     const audioContext = destination.context;
+    this.audioContext = audioContext; // Store for stop
     const formats = ['wav', 'm4a'];
     const fileName = `${mood}_Melody`;
+
+    // Ensure audio context is running
+    if (audioContext.state === 'suspended') {
+      await audioContext.resume();
+    }
 
     for (const format of formats) {
       try {
@@ -112,6 +119,11 @@ export class MelodyPlayer {
         if (response.ok) {
           const arrayBuffer = await response.arrayBuffer();
           this.audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+          // Ensure context is still running before playing
+          if (audioContext.state === 'suspended') {
+            await audioContext.resume();
+          }
 
           // Create gain node for volume control
           this.gainNode = audioContext.createGain();
@@ -123,13 +135,17 @@ export class MelodyPlayer {
           this.audioSource.buffer = this.audioBuffer;
           this.audioSource.loop = true; // Loop the melody
           this.audioSource.connect(this.gainNode);
-          this.audioSource.start(0);
+
+          // Start with a small delay to ensure context is ready
+          const startTime = audioContext.currentTime + 0.1;
+          this.audioSource.start(startTime);
 
           console.log(`Loaded custom melody: ${fileName}.${format}`);
           return true;
         }
       } catch (error) {
         // File doesn't exist or can't be decoded, try next format
+        console.log(`Failed to load ${fileName}.${format}:`, error);
         continue;
       }
     }
@@ -142,15 +158,33 @@ export class MelodyPlayer {
     // Stop custom audio file if playing
     if (this.audioSource) {
       try {
-        this.audioSource.stop();
+        // Stop immediately
+        const now = this.audioContext ? this.audioContext.currentTime : 0;
+        this.audioSource.stop(now);
       } catch (e) {
-        // Already stopped
+        // Already stopped or error - try without time parameter
+        try {
+          this.audioSource.stop();
+        } catch (e2) {
+          // Ignore - already stopped
+        }
       }
       this.audioSource = null;
       this.audioBuffer = null;
     }
     if (this.gainNode) {
-      this.gainNode.disconnect();
+      try {
+        // Fade out and disconnect
+        if (this.audioContext) {
+          const now = this.audioContext.currentTime;
+          this.gainNode.gain.cancelScheduledValues(now);
+          this.gainNode.gain.setValueAtTime(this.gainNode.gain.value, now);
+          this.gainNode.gain.linearRampToValueAtTime(0, now + 0.05);
+        }
+        this.gainNode.disconnect();
+      } catch (e) {
+        // Already disconnected
+      }
       this.gainNode = null;
     }
 

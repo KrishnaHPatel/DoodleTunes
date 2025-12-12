@@ -19,8 +19,13 @@ export class VoicePlayer {
       throw new Error('Audio context not available');
     }
     
+    // Ensure context is running
+    if (audioContext.state === 'suspended') {
+      await audioContext.resume();
+    }
+    
     const now = audioContext.currentTime;
-    let currentTime = now + 0.05; // Small delay for stability
+    let currentTime = now + 0.1; // Small delay for stability
 
     // Decode all chunks
     const audioBuffers = [];
