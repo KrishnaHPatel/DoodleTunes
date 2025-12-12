@@ -93,6 +93,7 @@
       justify-content: center;
       gap: 12px;
       margin-bottom: 16px;
+      position: relative;
     }
 
     h1 {
@@ -345,47 +346,32 @@
     }
 
     #next-btn {
-      display: none;
-      background: var(--success);
+      background: var(--primary);
       color: white;
       border: none;
-      animation: pulse 2s infinite;
-    }
-
-    #next-btn.show {
-      display: inline-flex;
-    }
-    
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-      }
-      50% {
-        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.6);
-      }
     }
     
     #next-btn:hover {
-      background: #059669;
-      animation: none;
+      background: var(--primary-600);
     }
   </style>
 </head>
 
 <body>
-  <div class="app">
-    <div class="hero">
-      <h1>DoodleTunes</h1>
-    </div>
-    <div class="subtitle">Enter labels, choose a mood, and generate singable, short lyrics.</div>
+    <div class="app">
+      <div class="hero">
+        <h1>DoodleTunes</h1>
+        <a href="drawing.html" class="btn-outline" style="text-decoration: none; color: var(--primary); position: absolute; left: 24px;">← Back</a>
+      </div>
+      <div class="subtitle">Enter labels, choose a mood, and generate singable, short lyrics.</div>
 
     <!-- Lyric Generator Panel -->
     <div class="card grid">
-      <div class="row">
-        <div style="flex:2; min-width: 260px;">
-          <label>Labels (comma separated)</label><br>
-          <input id="labels" placeholder="e.g. cat, moon">
-        </div>
+        <div class="row">
+          <div style="flex:2; min-width: 260px;">
+            <label>Labels (comma separated)</label><br>
+            <input id="labels" placeholder="e.g. cat, moon" readonly style="background-color: #f3f4f6; cursor: not-allowed;">
+          </div>
         <div style="flex:1; min-width: 180px;">
           <label>Mood</label><br>
           <div class="select">
@@ -413,9 +399,8 @@
         <div class="meta" id="meta"></div>
         <pre id="lyrics"></pre>
         <div class="actions">
-          <button id="thumbUp" class="thumb btn-outline" title="Like these lyrics">👍 Like</button>
-          <button id="thumbDown" class="thumb btn-outline" title="Regenerate">👎 Regenerate</button>
-          <button id="next-btn" class="btn-outline">Next →</button>
+          <button id="thumbDown" class="thumb btn-outline" title="Regenerate">Regenerate</button>
+          <button id="next-btn" class="btn-outline" style="display: none;">Next →</button>
         </div>
       </div>
     </div>

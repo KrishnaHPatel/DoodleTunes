@@ -8,20 +8,18 @@
   const resultEl = document.getElementById("result");
   const lyricsEl = document.getElementById("lyrics");
   const metaEl = document.getElementById("meta");
-  const thumbUpBtn = document.getElementById("thumbUp");
   const thumbDownBtn = document.getElementById("thumbDown");
   const nextBtn = document.getElementById("next-btn");
 
   let lastRequest = null;
   let isLoading = false;
-  let likedLyrics = null;
 
   function setLoading(loading, msg = "") {
     isLoading = loading;
     generateBtn.disabled = loading;
     generateBtn.classList.toggle("loading", loading);
-    thumbUpBtn.disabled = loading;
     thumbDownBtn.disabled = loading;
+    nextBtn.disabled = loading;
     statusEl.textContent = msg;
   }
 
@@ -63,9 +61,10 @@
     if (data.model) chips.push(`<span class="chip">Model: ${data.model}</span>`);
     metaEl.innerHTML = chips.join("");
 
-    // Reset like state
-    likedLyrics = null;
-    nextBtn.classList.remove("show");
+    // Show Next button when lyrics are generated
+    if (nextBtn) {
+      nextBtn.style.display = "inline-flex";
+    }
   }
 
   function parseLabels(str) {
@@ -85,27 +84,6 @@
     callGenerate(req);
   });
 
-  thumbUpBtn.addEventListener("click", () => {
-    if (!lyricsEl.textContent || lyricsEl.textContent === "(no lyrics returned)") {
-      return;
-    }
-    
-    // Store liked lyrics data
-    likedLyrics = {
-      lyrics: lyricsEl.textContent,
-      labels: lastRequest ? lastRequest.labels : [],
-      emotion: lastRequest ? lastRequest.emotion : emotionEl.value,
-      meta: metaEl.innerHTML
-    };
-    
-    // Store in localStorage for next page
-    localStorage.setItem('doodletunes_lyrics', JSON.stringify(likedLyrics));
-    
-    // Show Next button
-    nextBtn.classList.add("show");
-    statusEl.textContent = "Lyrics saved! Click Next to continue.";
-  });
-
   thumbDownBtn.addEventListener("click", () => {
     if (!lastRequest || isLoading) return;
     statusEl.textContent = "Regenerating...";
@@ -113,19 +91,76 @@
   });
 
   nextBtn.addEventListener("click", () => {
-    if (likedLyrics) {
-      window.location.href = "playback.html";
+    if (!lyricsEl.textContent || lyricsEl.textContent === "(no lyrics returned)") {
+      alert("Please generate lyrics first.");
+      return;
+    }
+    
+    // Store lyrics data for next page
+    const lyricsData = {
+      lyrics: lyricsEl.textContent,
+      labels: lastRequest ? lastRequest.labels : [],
+      emotion: lastRequest ? lastRequest.emotion : emotionEl.value,
+      meta: metaEl.innerHTML
+    };
+    
+    // Store in localStorage for next page
+    localStorage.setItem('doodletunes_lyrics', JSON.stringify(lyricsData));
+    
+    // Navigate to playback page
+    window.location.href = "playback.html";
+  });
+  
+  // Load labels from localStorage if coming from drawing page
+  window.addEventListener('DOMContentLoaded', () => {
+    const savedLabels = localStorage.getItem('doodletunes_labels');
+    const savedMood = localStorage.getItem('doodletunes_mood');
+    
+    if (savedLabels) {
+      try {
+        const labels = JSON.parse(savedLabels);
+        if (labels.length > 0) {
+          labelsEl.value = labels.join(", ");
+        }
+      } catch (e) {
+        console.error("Error loading labels:", e);
+      }
+    }
+    
+    if (savedMood && emotionEl) {
+      emotionEl.value = savedMood;
     }
   });
 
-  // Check if there's already liked lyrics (in case user navigated back)
+  // Check if there's already lyrics (in case user navigated back)
   const stored = localStorage.getItem('doodletunes_lyrics');
   if (stored) {
     try {
-      likedLyrics = JSON.parse(stored);
-      nextBtn.classList.add("show");
+      const lyricsData = JSON.parse(stored);
+      // If lyrics exist, show them and enable Next button
+      if (lyricsData.lyrics) {
+        lyricsEl.textContent = lyricsData.lyrics;
+        resultEl.style.display = "block";
+        if (nextBtn) {
+          nextBtn.style.display = "inline-flex";
+        }
+      }
     } catch (e) {
       console.error("Failed to parse stored lyrics", e);
+    }
+  }
+  
+  // Load labels on page load (mood is selected on this page, not from page 1)
+  const savedLabels = localStorage.getItem('doodletunes_labels');
+  
+  if (savedLabels) {
+    try {
+      const labels = JSON.parse(savedLabels);
+      if (labels.length > 0 && labelsEl) {
+        labelsEl.value = labels.join(", ");
+      }
+    } catch (e) {
+      console.error("Error loading labels:", e);
     }
   }
 })();
